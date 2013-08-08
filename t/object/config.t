@@ -13,7 +13,8 @@ use Test::Intern::Diary;
 
 use Intern::Diary::Config;
 
-sub _config : Test(0) {
+sub _config : Test(1) {
+    is(config->param('origin'), "http://localhost:3000");
 }
 
 __PACKAGE__->runtests;
