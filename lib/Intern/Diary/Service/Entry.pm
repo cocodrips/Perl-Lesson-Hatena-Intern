@@ -17,7 +17,7 @@ sub find_entry_by_id {
         WHERE entry_id = :entry_id
     ], +{
         entry_id => $entry_id
-    }, 'Intern::Diary::Model::User');
+    }, 'Intern::Diary::Model::Entry');
 
     $entry;
 }
@@ -34,7 +34,7 @@ sub get_all_entries_by_user {
         user_id => $user_id
     }, 'Intern::Diary::Model::User');
 
-    $entries;
+    return $entries;
 }
 
 
@@ -59,7 +59,42 @@ sub update {
     return $class->find_entry_by_id($db, {entry_id => $entry_id});
 }
 
+sub delete_entry {
+    my ($class, $db, $args) = @_;
+    my $entry_id = $args->{entry_id} // croak 'entry_id required';
 
+    $db->dbh('intern_diary')->query(q[
+        DELETE FROM entry
+        WHERE entry_id = :entry_id
+    ], {
+        entry_id    => $entry_id,
+    });
+
+    return $class->find_entry_by_id($db, {entry_id => $entry_id});
+}
+
+
+
+sub update {
+    my ($class, $db, $args) = @_;
+
+    my $title = $args->{title} // croak 'title required';
+    my $body = $args->{body} // croak 'body required';
+    my $entry_id = $args->{entry_id} // croak 'entry_id required';
+
+    $db->dbh('intern_diary')->query(q[
+        UPDATE entry
+        SET title   = :title,
+        body        = :body
+        WHERE entry_id = :entry_id
+    ], {
+        title       => $title,
+        body        => $body,
+        entry_id    => $entry_id,
+    });
+
+    return $class->find_entry_by_id($db, {entry_id => $entry_id});
+}
 sub create {
     my ($class, $db, $args) = @_;
 

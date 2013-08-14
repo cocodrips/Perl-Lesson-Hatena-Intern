@@ -15,7 +15,8 @@ use Intern::Diary::Service::Entry;
 my %HANDLERS = (
     add   => \&add_entry,
     list   => \&list_entries,
-    edit   => \&edit_entries
+    edit   => \&edit_entries,
+    delete => \&delete_entry
 );
 
 $ENV{INTERN_DIARY_ENV} = 'local';
@@ -32,14 +33,15 @@ sub add_entry {
     my $user_id = $user->{'user_id'};
 
     my $diary = create_diary();
-    print Dumper $diary;
     my $diary_id = $diary->{'diary_id'};
 
+    print "Please input text (.o.)/ >>\t";
     my $body=<STDIN>;
     chomp($body);
 
-    my $entry = Intern::Diary::Service::Entry->create($db, +{ title => $title, user_id => $user_id, diary_id => $diary_id, body => $body });
-    print Dumper $body;
+    Intern::Diary::Service::Entry->create($db, +{ title => $title, user_id => $user_id, diary_id => $diary_id, body => $body });
+    
+    print "Add Success!\n";
 }
 
 sub list_entries {
@@ -48,7 +50,7 @@ sub list_entries {
     my $entries = Intern::Diary::Service::Entry->get_all_entries_by_user($db, +{ user_id => $user_id });
     
     print "entry_id\ttitle\t\tbody\n";
-    print "----------------------------------\n";
+    print "--------------------------------------\n";
     for my $entry (@$entries) {
         print $entry->{'entry_id'}."\t\t".$entry->{'title'}."\t\t".$entry->{'body'}."\n";
     }
@@ -73,6 +75,20 @@ sub edit_entries {
 
     $entry = Intern::Diary::Service::Entry->update($db, +{ entry_id => $entry_id, title => $title, body => $body});
     print Dumper $entry;
+}
+
+sub delete_entry {
+    my $entry_id = shift @ARGV;
+
+    print "Do you want to delete entry ".$entry_id."? (y/n)\n";
+    chomp(my $will = <STDIN>);
+    if ($will ne "y") {
+        print "We don't delete...";
+        return;
+    }
+
+    Intern::Diary::Service::Entry->delete_entry($db, +{ entry_id => $entry_id});
+    list_entries();
 }
 
 sub create_diary {
@@ -106,43 +122,5 @@ sub get_user{
 }
 
 __END__
-
-
-=head1 NAME
-
-diary.pl - コマンドラインで日記を書くためのツール。
-
-=head1 SYNOPSIS
-
-
-  $ ./diary.pl [action] [argument...]
-
-=head1 ACTIONS
-
-=head2 C<add>
-
-  $ diary.pl add [title]
-
-日記に記事を書きます。
-
-=head2 C<list>
-
-  $ diary.pl list
-
-日記に投稿された記事の一覧を表示します。
-
-=head2 C<edit>
-
-  $ diary.pl edit [entry ID]
-
-指定したIDの記事を編集します。
-
-=head2 C<delete>
-
-  $ diary.pl delete [entry ID]
-
-指定したIDの記事を削除します。
-
-=cut
 
 
