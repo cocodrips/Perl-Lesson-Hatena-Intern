@@ -23,14 +23,4 @@ sub created {
     };
 }
 
-sub TO_JSON {
-    my ($self) = @_;
-
-    return {
-        user_id => JSON::Types::number $self->user_id,
-        name    => JSON::Types::string $self->name,
-        created => JSON::Types::string $self->created,
-    };
-}
-
 1;
