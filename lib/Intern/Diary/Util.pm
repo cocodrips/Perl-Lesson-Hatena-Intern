@@ -10,7 +10,7 @@ use Sub::Name;
 use DateTime;
 use DateTime::Format::MySQL;
 
-# use Intern::Diary::Config;
+use Intern::Diary::Config;
 
 sub datetime_from_db ($) {
     my $dt = DateTime::Format::MySQL->parse_datetime( shift );

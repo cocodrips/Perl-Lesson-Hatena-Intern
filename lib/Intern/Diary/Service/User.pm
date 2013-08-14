@@ -22,19 +22,7 @@ sub find_user_by_name {
     $user;
 }
 
-# sub find_users_by_user_ids {
-#     my ($class, $db, $args) = @_;
-#     my $user_ids = $args->{user_ids} // croak 'user_ids required';
-
-#     return $db->dbh('intern_diary')->select_all_as(q[
-#         SELECT * FROM user
-#           WHERE user_id IN (:user_ids)
-#     ], +{
-#         user_ids => $user_ids,
-#     }, 'Intern::Diary::Model::User');
-# }
-
-sub create {
+sub create_user {
     my ($class, $db, $args) = @_;
 
     my $name = $args->{name} // croak 'name required';

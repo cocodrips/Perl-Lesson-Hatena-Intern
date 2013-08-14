@@ -110,7 +110,7 @@ sub create_user{
     my $name = $ENV{USER};
     my $user = Intern::Diary::Service::User->find_user_by_name($db, +{ name => $name });
     unless ($user) {
-        $user = Intern::Diary::Service::User->create($db, +{ name => $name });
+        $user = Intern::Diary::Service::User->create_user($db, +{ name => $name });
     }
     return $user;
 }

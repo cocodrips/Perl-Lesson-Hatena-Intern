@@ -73,28 +73,6 @@ sub delete_entry {
     return $class->find_entry_by_id($db, {entry_id => $entry_id});
 }
 
-
-
-sub update {
-    my ($class, $db, $args) = @_;
-
-    my $title = $args->{title} // croak 'title required';
-    my $body = $args->{body} // croak 'body required';
-    my $entry_id = $args->{entry_id} // croak 'entry_id required';
-
-    $db->dbh('intern_diary')->query(q[
-        UPDATE entry
-        SET title   = :title,
-        body        = :body
-        WHERE entry_id = :entry_id
-    ], {
-        title       => $title,
-        body        => $body,
-        entry_id    => $entry_id,
-    });
-
-    return $class->find_entry_by_id($db, {entry_id => $entry_id});
-}
 sub create {
     my ($class, $db, $args) = @_;
 
@@ -115,7 +93,7 @@ sub create {
         body        => $body,
         user_id     => $user_id,
         diary_id    => $diary_id,
-        created => DateTime->now,
+        created     => DateTime::Format::MySQL->format_datetime(DateTime->now)
     });
 }
 
