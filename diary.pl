@@ -15,6 +15,7 @@ use Intern::Diary::Service::Entry;
 my %HANDLERS = (
     add   => \&add_entry,
     list   => \&list_entries,
+    edit   => \&edit_entries
 );
 
 $ENV{INTERN_DIARY_ENV} = 'local';
@@ -45,7 +46,33 @@ sub list_entries {
     my $user = create_user();
     my $user_id = $user->{'user_id'};   #get_user
     my $entries = Intern::Diary::Service::Entry->get_all_entries_by_user($db, +{ user_id => $user_id });
-    print Dumper $entries;
+    
+    print "entry_id\ttitle\t\tbody\n";
+    print "----------------------------------\n";
+    for my $entry (@$entries) {
+        print $entry->{'entry_id'}."\t\t".$entry->{'title'}."\t\t".$entry->{'body'}."\n";
+    }
+}
+
+sub edit_entries {
+    my $entry_id = shift @ARGV;
+    # Coming soon..........get entry
+    my $entry = Intern::Diary::Service::Entry->find_entry_by_id($db, +{ entry_id => $entry_id });
+
+    print "Edit title?\n";
+    chomp(my $title = <STDIN>);
+    if (!$title) {
+        $title = $entry->{'title'};
+    }
+
+    print "Edit Body?\n";
+    chomp(my $body = <STDIN>);
+    if (!$body) {
+        $body = $entry->{'body'};
+    }
+
+    $entry = Intern::Diary::Service::Entry->update($db, +{ entry_id => $entry_id, title => $title, body => $body});
+    print Dumper $entry;
 }
 
 sub create_diary {

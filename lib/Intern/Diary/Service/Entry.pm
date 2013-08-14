@@ -7,20 +7,20 @@ use utf8;
 use Carp;
 use DateTime;
 
-# sub find_user_by_name {
-#     my ($class, $db, $args) = @_;
+sub find_entry_by_id {
+    my ($class, $db, $args) = @_;
 
-#     my $name = $args->{name} // croak 'name required';
+    my $entry_id = $args->{entry_id} // croak 'name required';
 
-#     my $user = $db->dbh('intern_diary')->select_row_as(q[
-#         SELECT * FROM user
-#         WHERE name = :name
-#     ], +{
-#         name => $name
-#     }, 'Intern::Diary::Model::User');
+    my $entry = $db->dbh('intern_diary')->select_row_as(q[
+        SELECT * FROM entry
+        WHERE entry_id = :entry_id
+    ], +{
+        entry_id => $entry_id
+    }, 'Intern::Diary::Model::User');
 
-#     $user;
-# }
+    $entry;
+}
 
 sub get_all_entries_by_user {
     my ($class, $db, $args) = @_;
@@ -35,6 +35,28 @@ sub get_all_entries_by_user {
     }, 'Intern::Diary::Model::User');
 
     $entries;
+}
+
+
+sub update {
+    my ($class, $db, $args) = @_;
+
+    my $title = $args->{title} // croak 'title required';
+    my $body = $args->{body} // croak 'body required';
+    my $entry_id = $args->{entry_id} // croak 'entry_id required';
+
+    $db->dbh('intern_diary')->query(q[
+        UPDATE entry
+        SET title   = :title,
+        body        = :body
+        WHERE entry_id = :entry_id
+    ], {
+        title       => $title,
+        body        => $body,
+        entry_id    => $entry_id,
+    });
+
+    return $class->find_entry_by_id($db, {entry_id => $entry_id});
 }
 
 
@@ -60,11 +82,6 @@ sub create {
         diary_id    => $diary_id,
         created => DateTime->now,
     });
-
-    # return $class->find_user_by_name($db, {
-    #     name => $name,
-    # });
-    return 1;
 }
 
 1;

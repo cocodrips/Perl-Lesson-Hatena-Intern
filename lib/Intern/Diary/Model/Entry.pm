@@ -13,7 +13,6 @@ use Class::Accessor::Lite (
         user_id
         diary_id
         body
-        comment
     )],
     new => 1,
 );
