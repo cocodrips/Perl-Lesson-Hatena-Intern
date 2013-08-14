@@ -12,12 +12,12 @@ CREATE TABLE diary (
     `diary_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARBINARY(512) NOT NULL,
     `user_id` BIGINT UNSIGNED NOT NULL,
-    `entry_id` BIGINT UNSIGNED NOT NULL,
     `created` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     `updated` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     PRIMARY KEY (diary_id),
-    UNIQUE KEY (user_id, entry_id),
-    KEY (user_id, created)
+    KEY (user_id),
+    KEY (name),
+    KEY (updated)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -26,8 +26,15 @@ CREATE TABLE entry (
     `user_id` BIGINT UNSIGNED NOT NULL,
     `diary_id` BIGINT UNSIGNED NOT NULL,
     `title` VARBINARY(512) NOT NULL,
+    `body` VARBINARY(512) NOT NULL,
+    `comment` VARBINARY(512) NOT NULL,
     `created` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     `updated` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     PRIMARY KEY (entry_id),
-    UNIQUE KEY (url)
+    KEY (user_id),
+    KEY (diary_id),
+    KEY (title),
+    KEY (body),
+    KEY (comment),
+    KEY (created)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
