@@ -14,7 +14,7 @@ use Intern::Diary::Service::Entry;
 
 my %HANDLERS = (
     add   => \&add_entry,
-    list   => \&list_artries,
+    list   => \&list_entries,
 );
 
 $ENV{INTERN_DIARY_ENV} = 'local';
@@ -42,8 +42,10 @@ sub add_entry {
 }
 
 sub list_entries {
-    # my @args = @_;
-    # print Dumper @args;
+    my $user = create_user();
+    my $user_id = $user->{'user_id'};   #get_user
+    my $entries = Intern::Diary::Service::Entry->get_all_entries_by_user($db, +{ user_id => $user_id });
+    print Dumper $entries;
 }
 
 sub create_diary {

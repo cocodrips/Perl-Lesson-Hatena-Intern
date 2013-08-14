@@ -22,15 +22,21 @@ use DateTime;
 #     $user;
 # }
 
-# sub update_uese_name{
-#     my $user = $db->dbh('intern_diary')->select_row_as(q[
-#         SELECT * FROM user
-#         WHERE name = :name
-#     ], +{
-#         name => $name
-#     }, 'Intern::Diary::Model::User');
+sub get_all_entries_by_user {
+    my ($class, $db, $args) = @_;
 
-# }
+    my $user_id = $args->{user_id} // croak 'user_id required';
+
+    my $entries = $db->dbh('intern_diary')->select_all_as(q[
+        SELECT * FROM entry
+        WHERE user_id = :user_id
+    ], +{
+        user_id => $user_id
+    }, 'Intern::Diary::Model::User');
+
+    $entries;
+}
+
 
 sub create {
     my ($class, $db, $args) = @_;
