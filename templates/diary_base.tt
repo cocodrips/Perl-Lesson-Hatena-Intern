@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>ほんとうはここにタイトル</title>
-  <link rel="stylesheet" href="/css/diary_main.css">
-  <!-- <link rel="stylesheet" href="/css/pure-min.css"> -->
-
   <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
   <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
   <link href="/css/flat-ui.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/diary_main.css">
+
 
 
 </head>
@@ -17,7 +16,9 @@
 
  <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span2">
+    <div class="span3">
+      <h2>Diary title</h2>
+
 
       <div class="todo mrm">
         <ul>
@@ -43,22 +44,24 @@
             </a>
           </li>
 
+          <li>  
+            <a href="/diary/[% c.req.parameters.get('diary_id') %]/entries/list" title="">
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Edit <strong>Entries</strong>
+              </h4>
+              編集画面
+            </div>
+            </a>
+          </li>
+
 
         </ul>
       </div>
 
-      <div class="well sidebar-nav">
-        <ul class="nav nav-list">
-          <li class="nav-header">Sidebar</li>
-          <li><a href="http://getbootstrap.com/2.3.2/examples/fluid.html#">Recently</a></li>
-          <li><a href="/diary/[% c.req.parameters.get('diary_id') %]/entries" title="">List</a></li>
-          <li><a href="/diary/[% c.req.parameters.get('diary_id') %]/entry/create">Add Entry</a></li>
-        </ul>
-      </div>
     </div>
-    <div class="span10">
+    <div class="span9">
       <div class="hero-unit">
-        <h1>日記タイトル☆</h1>
         [% content %]
 
       </div>          
@@ -66,9 +69,6 @@
   </div>
 </div>
 
-<footer>
-  <p>cocodrips</p>
-</footer>
 
 </div>
 <script src="./Bootstrap, from Twitter_files/jquery.js"></script>

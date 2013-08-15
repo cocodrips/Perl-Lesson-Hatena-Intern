@@ -1,22 +1,25 @@
 [% WRAPPER 'diary_base.tt' %]
 
-
+<h2>Entries</h2>
 
 [% FOREACH entry IN entries %]
-<div class="row">
-  <div class="palette palette-clouds span7 round " style="min-height: 100px; margin-bottom: 30px; padding-top: 40px; position: relative;">
-     <a href="/diary/[% c.req.parameters.get('diary_id') %]/entry/[% entry.entry_id %]" class="btn d-title">[% entry.title %]</a>
+<div class="row-fluid">
+  <div class="palette palette-wet-asphalt span6 round" style="min-height: 100px; margin-bottom: 30px;">
+     <a href="/diary/[% c.req.parameters.get('diary_id') %]/entry/[% entry.entry_id %]" class="e-title">[% entry.title %]</a>
+     <i class= "icon icon-edit"></i> <br>
    [% entry.body %]
   </div>
 </div>
 [% END %]
 
 
-<div class="row">
-  <div class="span7" style="text-align: center;" >
+<div class="row-fluid">
+  <div class="span6" style="text-align: center;" >
     <div class="btn-toolbar">
     <div class="btn-group">
+      [% IF c.req.parameters.get('page') > 1  %]
       <a class="btn btn-primary" href="/diary/[% c.req.parameters.get('diary_id') %]/entries?page=[% c.req.parameters.get('page') - 1 %]&limit=3">prev</a>
+      [%- END %]
       [%- %]<a class="btn btn-primary active" href="#fakelink">[% page %]</a>
       [%- %]<a class="btn btn-primary " href="/diary/[% c.req.parameters.get('diary_id') %]/entries?page=[% c.req.parameters.get('page') + 1 %]&limit=3">next</a>
     </div>

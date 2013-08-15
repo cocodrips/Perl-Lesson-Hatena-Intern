@@ -5,7 +5,9 @@
 .title-bar{
     padding: 4px 5px;
 
+
 }
+
 
 .space-table tr{
     padding: 15px 10px;
@@ -19,17 +21,19 @@
 }
 
 .space-table thead{
-    background-color: #cccccc;
     border-width: 0px;
+    padding : 10px;
 
 }
 
 .round{
-    border-radius: 5px;
+    border-radius: 5px 0px 5px 5px;
+    padding: 30px;
 }
 
 a{
     text-decoration: none;
+    color: #f0f0f0;
 }
 
 .d-title{
@@ -40,5 +44,11 @@ a{
     margin-bottom: 10px;
     left: 0px;
     top: 0px;
+}
 
+.e-title{
+    display : block;
+    font-weight: bold;
+    font-size: 130%;
+    margin: 10px 1px;
 }

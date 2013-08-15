@@ -1,11 +1,13 @@
 [% WRAPPER 'diary_base.tt' %]
-
-<div class="span7">
-<form class="pure-form" action="" method="post" accept-charset="utf-8">
-    <h4>Title</h4>
+<h2>Create Entry</h2>
+<div class="row-fluid">
+<form class="pure-form span7" action="" method="post" accept-charset="utf-8">
+    <h5>Title</h5>
+    <hr>
     <input type="text" name="entry_title" class="pure-u-1-2" value="" placeholder="Diary name">
 
-    <h4>内容</h4>
+    <h5>内容</h5>
+    <hr>
     <textarea name="entry_body" class="pure-u-1-2" placeholder="内容をかく"></textarea>
 
     <button type="submit" class="btn btn-large btn-block btn-primary">Create</button>

@@ -1,9 +1,25 @@
 [% WRAPPER 'diary_base.tt' %]
-    <div class="palette palette-sun-flower span7 title-bar">
-        [% entry.title %]
-    </div>
-    <div class="palette palette-turquoise span7">
-        [% entry.body %]
-    </div>
 
+<h2>[% entry.title %]</h2>
+
+<div class="row-fluid">
+  <div class="palette palette-wet-asphalt span7 round" style="min-height: 100px; margin-bottom: 30px;">
+   [% entry.body %]
+  </div>
+</div>
+
+<form action="" method="post" accept-charset="utf-8">
+    
+  <div class="row-fluid">
+    <div class="span7">
+      <textarea value="" placeholder="コメントを書く"></textarea>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="span5"></div>
+    <button type="submit" class="span2 btn btn-block btn-warning">Submit</button>
+    
+  </div>
+</form>
 [% END # WRAPPER %]
+
