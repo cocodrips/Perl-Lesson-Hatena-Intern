@@ -3,32 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <title>ほんとうはここにタイトル</title>
-  <link rel="stylesheet" href="/css/pure-min.css">
   <link rel="stylesheet" href="/css/diary_main.css">
+  <!-- <link rel="stylesheet" href="/css/pure-min.css"> -->
+
+  <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+  <link href="/css/flat-ui.css" rel="stylesheet">
+
 
 </head>
 <body>
-<div class="content">
-  <div class="header">
-    <div class="pure-menu pure-menu-open pure-menu-fixed pure-menu-horizontal">
-      <a class="pure-menu-heading" href="">[% diary.name %]]</a>
 
-      <ul>
-        <li class="pure-menu-selected"><a href="">Home</a></li>
+ <div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
 
-      </ul>
+      <div class="todo mrm">
+        <ul>
+          <li>
+            <a href="/diary/[% c.req.parameters.get('diary_id') %]/entries" title="">
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Show <strong>All</strong> Entries
+              </h4>
+              全部表示する
+            </div>
+            </a>
+          </li>
+
+          <li>
+            <a href="/diary/[% c.req.parameters.get('diary_id') %]/entry/create" title="">
+            <div class="todo-content">
+              <h4 class="todo-name">
+                Create <strong>Entry</strong>
+              </h4>
+              記事を書く
+            </div>
+            </a>
+          </li>
+
+
+        </ul>
+      </div>
+
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">Sidebar</li>
+          <li><a href="http://getbootstrap.com/2.3.2/examples/fluid.html#">Recently</a></li>
+          <li><a href="/diary/[% c.req.parameters.get('diary_id') %]/entries" title="">List</a></li>
+          <li><a href="/diary/[% c.req.parameters.get('diary_id') %]/entry/create">Add Entry</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="span10">
+      <div class="hero-unit">
+        <h1>日記タイトル☆</h1>
+        [% content %]
+
+      </div>          
     </div>
   </div>
 </div>
 
-<div class="content main_container">
-[% content %]
+<footer>
+  <p>cocodrips</p>
+</footer>
 
 </div>
+<script src="./Bootstrap, from Twitter_files/jquery.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-transition.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-alert.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-modal.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-dropdown.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-scrollspy.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-tab.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-tooltip.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-popover.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-button.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-collapse.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-carousel.js"></script>
+<script src="./Bootstrap, from Twitter_files/bootstrap-typeahead.js"></script>
 
-<div class="footer">
-    Hatena
-</div>
 
 </body>
 </html>

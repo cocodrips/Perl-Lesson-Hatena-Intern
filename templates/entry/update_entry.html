@@ -1,0 +1,10 @@
+[% WRAPPER 'diary_base.tt' %]
+<form class="pure-form span7" action="" method="post" accept-charset="utf-8">
+    <h4>Title</h4>
+    <input type="text" name="title" class="pure-u-1-2" value="[% entry.title %]">
+
+    <h4>内容</h4>
+    <textarea name="body" class="pure-u-1-2">[% entry.body %]</textarea>
+    <button type="submit" class="btn btn-large btn-block btn-primary">Update</button>
+</form>
+[% END # WRAPPER %]

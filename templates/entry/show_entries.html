@@ -1,0 +1,31 @@
+[% WRAPPER 'diary_base.tt' %]
+
+
+
+[% FOREACH entry IN entries %]
+<div class="row">
+  <div class="palette palette-clouds span7 round " style="min-height: 100px; margin-bottom: 30px; padding-top: 40px; position: relative;">
+     <a href="/diary/[% c.req.parameters.get('diary_id') %]/entry/[% entry.entry_id %]" class="btn d-title">[% entry.title %]</a>
+   [% entry.body %]
+  </div>
+</div>
+[% END %]
+
+
+<div class="row">
+  <div class="span7" style="text-align: center;" >
+    <div class="btn-toolbar">
+    <div class="btn-group">
+      <a class="btn btn-primary" href="/diary/[% c.req.parameters.get('diary_id') %]/entries?page=[% c.req.parameters.get('page') - 1 %]&limit=3">prev</a>
+      [%- %]<a class="btn btn-primary active" href="#fakelink">[% page %]</a>
+      [%- %]<a class="btn btn-primary " href="/diary/[% c.req.parameters.get('diary_id') %]/entries?page=[% c.req.parameters.get('page') + 1 %]&limit=3">next</a>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+[% END # WRAPPER %]

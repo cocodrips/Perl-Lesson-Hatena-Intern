@@ -37,6 +37,29 @@ sub get_all_entries_by_user {
     return $entries;
 }
 
+sub get_limited_entries_by_user {
+    my ($class, $db, $args) = @_;
+
+    my $user_id = $args->{user_id} // croak 'user_id required';
+    my $limit = $args->{limit} // 3;
+    my $offset = $args->{offset} // 1;
+
+    my $entries = $db->dbh('intern_diary')->select_all_as(q[
+        SELECT * FROM entry
+        WHERE user_id = :user_id
+        ORDER BY created DESC
+        LIMIT :limit
+        OFFSET :offset
+
+    ], +{
+        user_id => $user_id,
+        limit => $limit,
+        offset => $offset
+    }, 'Intern::Diary::Model::Entry');
+
+    return $entries;
+}
+
 sub get_all_entries_by_diary_id {
     my ($class, $db, $args) = @_;
 

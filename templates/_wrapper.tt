@@ -8,23 +8,7 @@
   </head>
   <body>
 
-    <div class="content">
-      <div class="header">
-        <div class="pure-menu pure-menu-open pure-menu-fixed pure-menu-horizontal">
-          <a class="pure-menu-heading" href="">はてなインターン Diary</a>
-          <ul>
-            <li class="pure-menu-selected"><a href="#">Diary</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="splash" style="margin-top:100px;"> <!--なんかおかしい-->
-        <div class="pure-g-r">
-          <div class="pure-u-2-3">
-                [% content %]
-          </div>
-        </div>
-      </div>
-    </div>
-
+  [% content %]
+ 
   </body>
 </html>

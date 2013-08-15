@@ -18,7 +18,7 @@ sub make_router {
             action => 'list',
         } => { method => 'GET' };
 
-        # create diary
+        # CREATE DIARY
         connect '/diary/create' => {
             engine => 'Diary',
             action => 'create_diary_form',
@@ -35,11 +35,13 @@ sub make_router {
         } => { method => 'GET' };
 
 
-        connect '/diary/{diary_id}/entries' => {
+        # 日記一覧
+        connect '/diary/{diary_id}/entries/list' => {
             engine => 'Entry',
             action => 'entries_list',
         } => { method => 'GET' };
 
+        # CREATE DIARY
         connect '/diary/{diary_id}/entry/create' => {
             engine => 'Entry',
             action => 'create_entry_form',
@@ -50,11 +52,39 @@ sub make_router {
             action => 'create_entry',
         } => { method => 'POST' };
 
+
+        # SHOW DIARY
+        connect '/diary/{diary_id}/entry/{entry_id}' => {
+            engine => 'Entry',
+            action => 'show_entry',
+        } => { method => 'GET' };
+
+
+        connect '/diary/{diary_id}/entries' => {
+            engine => 'Entry',
+            action => 'show_entries',
+        } => { method => 'GET' };
+
+
+        # EDIT ENTRY
         connect '/diary/{diary_id}/edit/entry/{entry_id}' => {
             engine => 'Entry',
-            action => 'edit_entry',
+            action => 'update_entry_form',
         } => { method => 'GET' };
-        
+
+        connect '/diary/{diary_id}/edit/entry/{entry_id}' => {
+            engine => 'Entry',
+            action => 'update_entry',
+        } => { method => 'POST' };
+
+        # DELETE ENTRY
+        connect '/diary/{diary_id}/delete/entry/{entry_id}' => {
+            engine => 'Entry',
+            action => 'delete_entry',
+        };
+
+
+        # ユーザーを編集
         connect '/user/list' => {
             engine => 'User',
             action => 'default',

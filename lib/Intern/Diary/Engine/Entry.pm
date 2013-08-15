@@ -38,23 +38,108 @@ sub entries_list{
          }
     );
 
-    use Data::Dumper; warn Dumper $params;
-
     $c->html('entry/entries_list.html', {
-            params => $params,
             entries => $entries
         }
     );
 }
 
-
-sub create_entry_form {
+sub show_entry {
     my ($class, $c) = @_;    
-    my $params = $c->req->parameters;
-    $c->html('entry/create_entry.html', {
-            params => $params,
+    my $entry_id = $c->req->parameters->{entry_id};
+
+    my $entry = Intern::Diary::Service::Entry->find_entry_by_id(
+        $c->db,{ 
+            entry_id => $entry_id,
+         }
+    );
+
+    $c->html('entry/show_entry.html', {
+            entry => $entry
         }
     );
+}
+
+sub show_entries {
+    my ($class, $c) = @_;    
+    my $entry_id = $c->req->parameters->{entry_id};
+    my $page = $c->req->parameters->{page} // 0;
+
+    my $name = $ENV{USER};
+    my $user = Intern::Diary::Service::User->find_user_by_name(
+        $c->db,
+        { name => $name }
+    );
+    my $entries;
+
+    if ($page) {
+        my $limit = $c->req->parameters->{limit};
+        my $offset = ($page - 1) * $limit ;
+
+        $entries = Intern::Diary::Service::Entry->get_limited_entries_by_user(
+            $c->db,{ 
+                user_id => $user->{'user_id'},
+                limit   => $limit,
+                offset    => $offset
+             }
+        );
+    } else {
+        $entries = Intern::Diary::Service::Entry->get_all_entries_by_user(
+            $c->db,{ 
+                user_id => $user->{'user_id'},
+            }
+        );
+    }
+    $c->html('entry/show_entries.html', {
+            entries => $entries,
+            page => $page
+        }
+    );
+}
+
+sub update_entry_form {
+    my ($class, $c) = @_;    
+    my $entry_id = $c->req->parameters->{entry_id};
+
+    my $entry = Intern::Diary::Service::Entry->find_entry_by_id(
+        $c->db,{ 
+            entry_id => $entry_id,
+         }
+    );
+
+    $c->html('entry/update_entry.html', {
+            entry => $entry
+        }
+    );
+}
+
+sub update_entry {
+    my ($class, $c) = @_;    
+    my $entry_id = $c->req->parameters->{entry_id};
+    my $title = $c->req->parameters->{title};
+    my $body = $c->req->parameters->{body};
+
+    my $entry = Intern::Diary::Service::Entry->update(
+        $c->db,{ 
+            entry_id => $entry_id,
+            title => $title,
+            body => $body,
+         }
+    );
+    $c->res->redirect("/diary/$entry_id/entries");
+}
+
+
+sub delete_entry {
+    my ($class, $c) = @_;    
+    my $entry_id = $c->req->parameters->{entry_id};
+
+    my $entry = Intern::Diary::Service::Entry->delete_entry(
+        $c->db,{ 
+            entry_id => $entry_id,
+         }
+    );
+    $c->res->redirect("/diary/$entry_id/entries");
 }
 
 sub create_entry_form {
@@ -68,8 +153,6 @@ sub create_entry_form {
 
 sub create_entry {
     my ($class, $c) = @_; 
-    use Data::Dumper; 
-    warn Dumper $c->req->parameters;
 
     my $params = $c->req->parameters;
 

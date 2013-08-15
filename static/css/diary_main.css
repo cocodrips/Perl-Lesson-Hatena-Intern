@@ -1,3 +1,44 @@
 .main-container{
     margin: 0 auto;
 }
+
+.title-bar{
+    padding: 4px 5px;
+
+}
+
+.space-table tr{
+    padding: 15px 10px;
+    border-width: 0px;
+}
+
+.space-table td{
+    padding: 15px 20px;
+    border-width: 0px;
+
+}
+
+.space-table thead{
+    background-color: #cccccc;
+    border-width: 0px;
+
+}
+
+.round{
+    border-radius: 5px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.d-title{
+    position: absolute;
+    font-weight: bold;
+    display: block;
+    width: 300px;
+    margin-bottom: 10px;
+    left: 0px;
+    top: 0px;
+
+}
