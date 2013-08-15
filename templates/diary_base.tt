@@ -23,7 +23,7 @@
       <div class="todo mrm">
         <ul>
           <li>
-            <a href="/diary/[% c.req.parameters.get('diary_id') %]/entries" title="">
+            <a href="/diary/[% c.req.parameters.get('diary_id') %]/entries?page=1" title="">
             <div class="todo-content">
               <h4 class="todo-name">
                 Show <strong>All</strong> Entries
@@ -50,7 +50,7 @@
               <h4 class="todo-name">
                 Edit <strong>Entries</strong>
               </h4>
-              編集画面
+              管理画面
             </div>
             </a>
           </li>
