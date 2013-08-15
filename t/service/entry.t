@@ -37,7 +37,7 @@ sub find_diary_by_name : Test(2) {
 
     subtest 'entry見つかる' => sub {
         my $created_entry = create_entry({
-            entry_id => 3,
+            entry_id => 4,
         });
 
         my $entry = Intern::Diary::Service::Entry->find_entry_by_id($db, {

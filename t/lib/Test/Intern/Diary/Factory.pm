@@ -61,7 +61,7 @@ sub create_diary {
 
 sub create_entry {
     my %args = @_;
-    my $entry_id = $args{entry_id} // 5;
+    my $entry_id = $args{entry_id};
     my $title = $args{title} // random_regex('test_entry_\w{15}');
     my $body = $args{body} // random_regex('test_body_\w{15}');
     my $diary_id = $args{diary_id} // 1;
