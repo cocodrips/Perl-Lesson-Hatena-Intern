@@ -4,19 +4,21 @@ use warnings;
 use utf8;
 use Data::Dumper;
 
-my $command = shift @ARGV || 'add';
-
 use Intern::Diary::DBI::Factory;
 use Intern::Diary::Service::User;
 use Intern::Diary::Service::Diary;
 use Intern::Diary::Service::Entry;
+use Intern::Diary::Service::Comment;
 
+my $command = shift @ARGV || 'add';
 
 my %HANDLERS = (
     add   => \&add_entry,
     list   => \&list_entries,
     edit   => \&edit_entries,
-    delete => \&delete_entry
+    delete => \&delete_entry,
+    comment => \&add_comment,
+    show => \&show_entry
 );
 
 $ENV{INTERN_DIARY_ENV} = 'local';
@@ -91,6 +93,41 @@ sub delete_entry {
     list_entries();
 }
 
+sub add_comment{
+    my $entry_id = shift @ARGV;
+    my $user_id = get_user()->{'user_id'};
+    if (!$user_id) {
+        print "No user. please add entry.";
+        return;
+    }
+    print "please input ".$entry_id. " comment >>";
+    chomp(my $comment = <STDIN>);
+    if (!$comment) {
+        $comment = "comment test";
+    }
+
+    Intern::Diary::Service::Comment->create($db, +{ entry_id => $entry_id, user_id => $user_id, comment => $comment });
+}
+
+# 記事の内容、コメントの確認
+sub show_entry{
+    my $entry_id = shift @ARGV;
+    my $entry = Intern::Diary::Service::Entry->find_entry_by_id($db, +{ entry_id => $entry_id });
+    my $comments = Intern::Diary::Service::Comment->get_all_comment_by_entry_id($db, +{ entry_id => $entry_id});
+    
+    print "entry_id\tbody\n";
+    print "--------------------------------------\n";
+    print $entry->{'entry_id'}."\t\t".$entry->{'body'}."\n\n";
+
+    print "comment\n";
+    print "--------------------------------------\n";
+    for my $comment (@$comments) {
+        print $comment->{'comment'}."\n";
+    }
+}
+
+
+
 sub create_diary {
     my $name = 'MyDiary';
     
@@ -108,11 +145,10 @@ sub get_diary {
 
 sub create_user{
     my $name = $ENV{USER};
-    my $user = Intern::Diary::Service::User->find_user_by_name($db, +{ name => $name });
+    my $user = get_user();
     unless ($user) {
         $user = Intern::Diary::Service::User->create_user($db, +{ name => $name });
     }
-    return $user;
 }
 
 sub get_user{

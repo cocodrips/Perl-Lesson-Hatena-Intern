@@ -21,7 +21,7 @@ sub _use : Test(startup => 1) {
     use_ok 'Intern::Diary::Model::Diary';
 }
 
-sub _accessor : Test(6) {
+sub _accessor : Test(3) {
     my $now = DateTime->now;
     my $entry = Intern::Diary::Model::Diary->new(
         diary_id => 1,

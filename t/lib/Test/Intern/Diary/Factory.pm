@@ -42,7 +42,7 @@ sub create_user {
 
 sub create_diary {
     my %args = @_;
-    my $name = $args{name} // random_regex('test_user_\w{15}');
+    my $name = $args{name} // random_regex('test_diary_\w{15}');
     my $created = $args{created} // DateTime->now;
 
     my $db = Intern::Diary::DBI::Factory->new;
@@ -57,5 +57,36 @@ sub create_diary {
     });
 
     return Intern::Diary::Service::Diary->find_diary_by_name($db, { name => $name });
+}
+
+sub create_entry {
+    my %args = @_;
+    my $entry_id = $args{entry_id} // 5;
+    my $title = $args{title} // random_regex('test_entry_\w{15}');
+    my $body = $args{body} // random_regex('test_body_\w{15}');
+    my $diary_id = $args{diary_id} // 1;
+    my $user_id = $args{diary_id} // 1;
+    my $created = $args{created} // DateTime->now;
+
+    my $db = Intern::Diary::DBI::Factory->new;
+    my $dbh = $db->dbh('intern_diary');
+    $dbh->query(q[
+        INSERT INTO entry
+        SET title  = :title,
+        body = :body,
+        entry_id = :entry_id,
+        user_id = :user_id,
+        diary_id = :diary_id,
+        created = :created
+    ], {
+        title       => $title,
+        body        => $body,
+        entry_id    => $entry_id,
+        user_id     => $user_id,
+        diary_id    => $diary_id,
+        created     => DateTime::Format::MySQL->format_datetime(DateTime->now)
+    });
+
+    return Intern::Diary::Service::Entry->find_entry_by_id($db, { id => $entry_id });
 }
 1;
