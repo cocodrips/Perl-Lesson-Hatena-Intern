@@ -6,6 +6,7 @@ use utf8;
 use Intern::Diary::Service::User;
 use Intern::Diary::Service::Diary;
 use Intern::Diary::Service::Entry;
+use Intern::Diary::Service::Comment;
 
 sub entries_list{
     my ($class, $c) = @_; 
@@ -39,8 +40,16 @@ sub show_entry {
          }
     );
 
+    my $comments = Intern::Diary::Service::Comment->get_all_comment_by_entry_id($c->db, +{ 
+        entry_id => $entry_id,
+    });
+
+    use Data::Dumper; warn Dumper $comments;
+
+
     $c->html('entry/show_entry.html', {
-            entry => $entry
+            entry => $entry,
+            comments => $comments
         }
     );
 }
@@ -48,33 +57,25 @@ sub show_entry {
 sub show_entries {
     my ($class, $c) = @_;    
     my $entry_id = $c->req->parameters->{entry_id};
-    my $page = $c->req->parameters->{page} // 0;
+    my $page = $c->req->parameters->{page} // 1;
 
     my $name = $ENV{USER};
     my $user = Intern::Diary::Service::User->find_user_by_name(
         $c->db,
         { name => $name }
     );
-    my $entries;
 
-    if ($page) {
-        my $limit = $c->req->parameters->{limit};
-        my $offset = ($page - 1) * $limit ;
+    my $limit = $c->req->parameters->{limit};
+    my $offset = ($page - 1) * $limit ;
 
-        $entries = Intern::Diary::Service::Entry->get_limited_entries_by_user(
-            $c->db,{ 
-                user_id => $user->{'user_id'},
-                limit   => $limit,
-                offset    => $offset
-             }
-        );
-    } else {
-        $entries = Intern::Diary::Service::Entry->get_all_entries_by_user(
-            $c->db,{ 
-                user_id => $user->{'user_id'},
-            }
-        );
-    }
+    my $entries = Intern::Diary::Service::Entry->get_limited_entries_by_user(
+        $c->db,{ 
+            user_id => $user->{'user_id'},
+            limit   => $limit,
+            offset    => $offset
+         }
+    );
+
     $c->html('entry/show_entries.html', {
             entries => $entries,
             page => $page
@@ -129,11 +130,31 @@ sub delete_entry {
 
 sub create_entry_form {
     my ($class, $c) = @_;    
-    my $params = $c->req->parameters;
-    $c->html('entry/create_entry.html', {
-            params => $params,
-        }
-    );
+    $c->html('entry/create_entry.html');
+}
+
+sub create_comment {
+    my ($class, $c) = @_;
+    my $name = $ENV{USER};
+
+    my $diary_id = $c->req->parameters->{diary_id}; 
+    my $entry_id = $c->req->parameters->{entry_id}; 
+    my $comment = $c->req->parameters->{comment};
+    my $user = Intern::Diary::Service::User->find_user_by_name(
+        $c->db,
+        { name => $name }
+    ); 
+
+    Intern::Diary::Service::Comment->create($c->db, +{ 
+        entry_id => $entry_id,
+        user_id => $user->{'user_id'},
+        comment => $comment
+    });
+
+    use Data::Dumper; warn Dumper "えんとりいあいでぃい".$entry_id;
+
+    $c->res->redirect("/diary/$diary_id/entry/$entry_id");
+
 }
 
 sub create_entry {

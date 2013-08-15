@@ -11,24 +11,19 @@
 
 .space-table tr{
     padding: 15px 10px;
-    border-width: 0px;
 }
 
 .space-table td{
     padding: 15px 20px;
-    border-width: 0px;
-
 }
 
 .space-table thead{
-    border-width: 0px;
     padding : 10px;
-
 }
 
 .round{
-    border-radius: 5px 0px 5px 5px;
-    padding: 30px;
+    border-radius: 5px;
+    padding: 20px;
 }
 
 a{
@@ -44,6 +39,13 @@ a{
     margin-bottom: 10px;
     left: 0px;
     top: 0px;
+}
+
+.date{
+    font-weight: normal;
+    font-size: 70%;
+    float:bottom;
+    padding: 10px;
 }
 
 .e-title{

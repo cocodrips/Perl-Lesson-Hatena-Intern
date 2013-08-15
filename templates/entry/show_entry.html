@@ -1,5 +1,8 @@
 [% WRAPPER 'diary_base.tt' %]
 
+<div class="span2 round date" style="float: left;" >
+  [% entry.created %]
+</div>
 <h2>[% entry.title %]</h2>
 
 <div class="row-fluid">
@@ -8,11 +11,35 @@
   </div>
 </div>
 
-<form action="" method="post" accept-charset="utf-8">
+
+<h2>Comments</h2>
+<div class="row-fluid">
+  <div class="span7">
+  <hr>
+  </div>
+</div>
+
+[% FOREACH comment IN comments %]
+<div class="row-fluid">
+  <div class="span7 round date">
+    [% comment.created %]
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="palette palette-clouds span7 round" style="margin-bottom: 30px;">
+
+    <br>
+   [% comment.comment %]
+  </div>
+</div>
+[% END %]
+
+
+<form action="[% c.req.parameters.get('entry_id') %]/comment" method="post" accept-charset="utf-8">
     
   <div class="row-fluid">
     <div class="span7">
-      <textarea value="" placeholder="コメントを書く"></textarea>
+      <textarea name="comment" value="" placeholder="コメントを書く"></textarea>
     </div>
   </div>
   <div class="row-fluid">

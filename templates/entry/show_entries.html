@@ -4,9 +4,13 @@
 
 [% FOREACH entry IN entries %]
 <div class="row-fluid">
-  <div class="palette palette-wet-asphalt span6 round" style="min-height: 100px; margin-bottom: 30px;">
-     <a href="/diary/[% c.req.parameters.get('diary_id') %]/entry/[% entry.entry_id %]" class="e-title">[% entry.title %]</a>
-     <i class= "icon icon-edit"></i> <br>
+  <div class="palette palette-wet-asphalt span8 round" style="min-height: 100px; margin-bottom: 30px;">
+    <div class="span2 round date" style="float: left;" >
+      [% entry.created %]
+    </div>
+     <a href="/diary/[% c.req.parameters.get('diary_id') %]/entry/[% entry.entry_id %]" class="e-title">[% entry.title %]
+     </a>
+     <br>
    [% entry.body %]
   </div>
 </div>
@@ -14,7 +18,7 @@
 
 
 <div class="row-fluid">
-  <div class="span6" style="text-align: center;" >
+  <div class="span8" style="text-align: center;" >
     <div class="btn-toolbar">
     <div class="btn-group">
       [% IF c.req.parameters.get('page') > 1  %]

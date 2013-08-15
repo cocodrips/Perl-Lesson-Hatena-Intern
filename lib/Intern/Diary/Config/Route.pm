@@ -59,6 +59,11 @@ sub make_router {
             action => 'show_entry',
         } => { method => 'GET' };
 
+        connect '/diary/{diary_id}/entry/{entry_id}/comment' => {
+            engine => 'Entry',
+            action => 'create_comment',
+        } => { method => 'POST' };
+
 
         connect '/diary/{diary_id}/entries' => {
             engine => 'Entry',
