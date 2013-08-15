@@ -18,3 +18,22 @@ $ script/setup.sh
 ```
 $ script/appup
 ```
+
+##user
+	id bigint
+	name unique string(32)
+	cretated TIMESTAMP
+	diary bigint 
+	
+
+##diary
+	id bigint
+	user_id
+	title 
+
+##entry
+	id
+	entree_id
+	comment
+	date
+	
