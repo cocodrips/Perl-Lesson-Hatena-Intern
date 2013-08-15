@@ -5,6 +5,7 @@ use warnings;
 use utf8;
 use Intern::Diary::Service::User;
 use Intern::Diary::Service::Diary;
+use Intern::Diary::Service::Entry;
 
 sub default {
     my ($class, $c) = @_;
@@ -24,7 +25,6 @@ sub default {
 sub entry_list {
     my ($class, $c) = @_;
     my $name = $ENV{USER};
-
     my $user = Intern::Diary::Service::User->find_user_by_name(
         $c->db,
         { name => $name }
@@ -40,11 +40,23 @@ sub entry_list {
 
 sub show_diary {
     my ($class, $c) = @_;
-    use Data::Dumper; 
-    warn Dumper $c->req->parameters;
+    my $diary_id = $c->req->parameters->{diary_id};
 
-    my $name = $ENV{USER};
-    $c->html('diary/create_diary.html');
+    my $diary = Intern::Diary::Service::Diary->find_diary_by_id($c->db,
+        { diary_id => $diary_id }
+    );
+
+    my $entries = Intern::Diary::Service::Entry->get_all_entries_by_diary_id($c->db,
+        { diary_id => $diary_id }
+    );
+
+    use Data::Dumper; warn Dumper $diary;
+    # use Data::Dumper; warn Dumper $entries;
+    $c->html('diary/diary_top.html',
+        {
+            diary => $diary 
+        }
+    );
 }
 
 
@@ -55,8 +67,6 @@ sub create_diary_form {
 
 sub create_diary {
     my ($class, $c) = @_;
-    use Data::Dumper; 
-    warn Dumper $c->req->parameters;
 
     my $new_diary_name = $c->req->parameters->{diary_name};
     if (!$new_diary_name) {

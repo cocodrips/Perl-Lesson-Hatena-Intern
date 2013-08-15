@@ -28,6 +28,32 @@ sub make_router {
             engine => 'Diary',
             action => 'create_diary',
         } => { method => 'POST' };
+
+        connect '/diary/{diary_id}' => {
+            engine => 'Diary',
+            action => 'show_diary',
+        } => { method => 'GET' };
+
+
+        connect '/diary/{diary_id}/entries' => {
+            engine => 'Entry',
+            action => 'entries_list',
+        } => { method => 'GET' };
+
+        connect '/diary/{diary_id}/entry/create' => {
+            engine => 'Entry',
+            action => 'create_entry_form',
+        } => { method => 'GET' };
+
+        connect '/diary/{diary_id}/entry/create' => {
+            engine => 'Entry',
+            action => 'create_entry',
+        } => { method => 'POST' };
+
+        connect '/diary/{diary_id}/edit/entry/{entry_id}' => {
+            engine => 'Entry',
+            action => 'edit_entry',
+        } => { method => 'GET' };
         
         connect '/user/list' => {
             engine => 'User',

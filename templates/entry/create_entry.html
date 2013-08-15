@@ -1,0 +1,43 @@
+[% WRAPPER 'diary_base.tt' %]
+
+  <div class="splash">
+    <div class="pure-g-r">
+      <div class="pure-u-1-3">
+        <h1></h1>
+      </div>
+
+      <div class="pure-u-2-3" >
+        <div class="l-box splash-text">
+          <h2 class="splash-subhead">
+            [% diary.name %]
+          </h2>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pure-g-r">
+    <div class="pure-u-1-3">
+      <h1>日記を書く</h1>
+    </div>
+
+    <div class="pure-u-2-3" >
+      <form class="pure-form" action="" method="post" accept-charset="utf-8">
+        <fieldset>
+          <legend>Title</legend>
+          <input type="text" name="entry_title" class="pure-u-1-2" value="" placeholder="Diary name">
+
+          <legend></legend>
+          <textarea name="entry_body" class="pure-u-1-2" placeholder="内容をかく"></textarea>
+
+          <legend></legend>
+          <button type="submit" class="pure-button pure-button-primary">Create</button>
+        </fieldset>
+      </form>
+
+    </div>  
+  </div>
+
+
+[% END # WRAPPER %]

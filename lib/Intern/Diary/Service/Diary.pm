@@ -22,6 +22,21 @@ sub find_diary_by_name {
     $diary;
 }
 
+sub find_diary_by_id {
+    my ($class, $db, $args) = @_;
+
+    my $diary_id = $args->{diary_id} // croak 'diary_id required';
+
+    my $diary = $db->dbh('intern_diary')->select_row_as(q[
+        SELECT * FROM diary
+        WHERE diary_id = :diary_id
+    ], +{
+        diary_id => $diary_id
+    }, 'Intern::Diary::Model::Diary');
+
+    $diary;
+}
+
 sub create {
     my ($class, $db, $args) = @_;
 

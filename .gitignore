@@ -16,3 +16,11 @@ nytprof.out
 pm_to_blib
 
 
+### /Users/Chiichan/.gitignore-boilerplates/Global/IntelliJ.gitignore
+
+*.iml
+*.ipr
+*.iws
+.idea/
+
+

@@ -32,8 +32,22 @@ sub get_all_entries_by_user {
         WHERE user_id = :user_id
     ], +{
         user_id => $user_id
-    }, 'Intern::Diary::Model::User');
+    }, 'Intern::Diary::Model::Entry');
 
+    return $entries;
+}
+
+sub get_all_entries_by_diary_id {
+    my ($class, $db, $args) = @_;
+
+    my $diary_id = $args->{diary_id} // croak 'diary_id required';
+
+    my $entries = $db->dbh('intern_diary')->select_all_as(q[
+        SELECT * FROM entry
+        WHERE diary_id = :diary_id
+    ], +{
+        diary_id => $diary_id
+    }, 'Intern::Diary::Model::Entry');
     return $entries;
 }
 
