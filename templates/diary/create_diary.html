@@ -1,0 +1,13 @@
+[% WRAPPER '_wrapper.tt' %]
+<h2> Create Diary </h2>
+<div class=row>
+
+  <form class="pure-form" action="/diary/create" method="post" accept-charset="utf-8">
+    <fieldset>
+      <legend>Diary name</legend>
+      <input type="text" name="diary_name" value="" placeholder="Diary name">
+      <button type="submit" class="pure-button pure-button-primary">Create</button>
+    </fieldset>
+  </form>
+</div>
+[% END # WRAPPER %]

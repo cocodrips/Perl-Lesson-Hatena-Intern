@@ -3,9 +3,28 @@
   <head>
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.1/pure-min.css">
     <title>Intern::Diary</title>
   </head>
   <body>
-    [% content %]
+
+    <div class="content">
+      <div class="header">
+        <div class="pure-menu pure-menu-open pure-menu-fixed pure-menu-horizontal">
+          <a class="pure-menu-heading" href="">はてなインターン Diary</a>
+          <ul>
+            <li class="pure-menu-selected"><a href="#">Diary</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="splash" style="margin-top:100px;"> <!--なんかおかしい-->
+        <div class="pure-g-r">
+          <div class="pure-u-2-3">
+                [% content %]
+          </div>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>

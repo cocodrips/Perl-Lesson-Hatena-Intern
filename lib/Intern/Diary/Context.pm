@@ -51,7 +51,6 @@ sub _build_stash { +{} };
 *res = \&response;
 
 ### HTTP Response
-
 sub render_file {
     my ($self, $file, $args) = @_;
     $args //= {};
@@ -119,5 +118,6 @@ sub dbh {
     my ($self, $name) = @_;
     return $self->db->dbh($name);
 }
+
 
 1;

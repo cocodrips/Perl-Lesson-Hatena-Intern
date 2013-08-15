@@ -1,4 +1,4 @@
-package Intern::Diary::Engine::Index;
+package Intern::Diary::Engine::User;
 
 use strict;
 use warnings;
@@ -15,8 +15,8 @@ sub default {
         { name => $name }
     );
     
-    $c->html('index.html', {
-        name => $user->{'name'}
+    $c->html('user/list.html', {
+        user => $user
         }
     );
 }

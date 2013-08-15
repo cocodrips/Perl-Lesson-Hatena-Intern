@@ -15,6 +15,7 @@ sub _get : Test(3) {
     $mech->get_ok('/');
     $mech->title_is('Intern::Diary');
     $mech->content_contains('Intern-Diary');
+    $mech->
 }
 
 __PACKAGE__->runtests;

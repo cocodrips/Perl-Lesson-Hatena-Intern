@@ -12,10 +12,28 @@ sub make_router {
             engine => 'Index',
             action => 'default',
         };
+        
+        connect '/diary/{id}/entry/list' => {
+            engine => 'Diary',
+            action => 'list',
+        } => { method => 'GET' };
+
+        # create diary
+        connect '/diary/create' => {
+            engine => 'Diary',
+            action => 'create_diary_form',
+        } => { method => 'GET' };
+
+        connect '/diary/create' => {
+            engine => 'Diary',
+            action => 'create_diary',
+        } => { method => 'POST' };
+        
         connect '/user/list' => {
             engine => 'User',
-            action => 'list',
+            action => 'default',
         };
+        
         connect '/user/register' => {
             engine => 'User',
             action => 'register',
