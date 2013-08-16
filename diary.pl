@@ -31,18 +31,24 @@ $handler->(@ARGV);
 sub add_entry {
     my $title = shift @ARGV || 'no title';
 
-    my $user = create_user();
-    my $user_id = $user->{'user_id'};
+    my $user = get_user();
+    my $diary = get_diary();
 
-    my $diary = create_diary();
-    my $diary_id = $diary->{'diary_id'};
+    if (!$user or !$diary) {
+        warn "No user / No Diary";
+        return;
+    }
 
     print "Please input text (.o.)/ >>\t";
 
     my $body= do { local $/; <STDIN>; };
     chomp($body);
 
-    Intern::Diary::Service::Entry->create($db, +{ title => $title, user_id => $user_id, diary_id => $diary_id, body => $body });
+    Intern::Diary::Service::Entry->create($db, +{ 
+        title => $title, 
+        user_id => $user->{'user_id'},
+        diary_id => $diary->{'diary_id'}, 
+        body => $body });
     
     print "Add Success!\n";
 }

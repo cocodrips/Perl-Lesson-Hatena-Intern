@@ -10,17 +10,11 @@ use Intern::Diary::Service::Comment;
 
 sub entries_list{
     my ($class, $c) = @_; 
-    my $params = $c->req->parameters;
+    my $diary_id = $c->req->parameters->{'diary_id'};
 
-    my $name = $ENV{USER};
-    my $user = Intern::Diary::Service::User->find_user_by_name(
-        $c->db,
-        { name => $name }
-    );
-
-    my $entries = Intern::Diary::Service::Entry->get_all_entries_by_user(
+    my $entries = Intern::Diary::Service::Entry->get_all_entries_by_diary_id(
         $c->db,{ 
-            user_id => $user->{'user_id'},
+            diary_id => $diary_id
          }
     );
 
@@ -29,6 +23,7 @@ sub entries_list{
         }
     );
 }
+
 
 sub show_entry {
     my ($class, $c) = @_;    
@@ -46,7 +41,6 @@ sub show_entry {
 
     use Data::Dumper; warn Dumper $comments;
 
-
     $c->html('entry/show_entry.html', {
             entry => $entry,
             comments => $comments
@@ -54,23 +48,19 @@ sub show_entry {
     );
 }
 
+# have pager
 sub show_entries {
     my ($class, $c) = @_;    
     my $entry_id = $c->req->parameters->{entry_id};
     my $page = $c->req->parameters->{page} // 1;
-
-    my $name = $ENV{USER};
-    my $user = Intern::Diary::Service::User->find_user_by_name(
-        $c->db,
-        { name => $name }
-    );
+    my $diary_id = $c->req->parameters->{'diary_id'};
 
     my $limit = $c->req->parameters->{limit};
     my $offset = ($page - 1) * $limit ;
 
-    my $entries = Intern::Diary::Service::Entry->get_limited_entries_by_user(
+    my $entries = Intern::Diary::Service::Entry->get_limited_entries_by_diary_id(
         $c->db,{ 
-            user_id => $user->{'user_id'},
+            diary_id => $diary_id,
             limit   => $limit,
             offset    => $offset
          }
@@ -100,7 +90,8 @@ sub update_entry_form {
 }
 
 sub update_entry {
-    my ($class, $c) = @_;    
+    my ($class, $c) = @_;
+    my $diary_id = $c->req->parameters->{'diary_id'};
     my $entry_id = $c->req->parameters->{entry_id};
     my $title = $c->req->parameters->{title};
     my $body = $c->req->parameters->{body};
@@ -112,24 +103,27 @@ sub update_entry {
             body => $body,
          }
     );
-    $c->res->redirect("/diary/$entry_id/entries");
+    $c->res->redirect("/diary/$diary_id/entry/$entry_id");
 }
 
 
 sub delete_entry {
-    my ($class, $c) = @_;    
+    my ($class, $c) = @_;
+    my $diary_id = $c->req->parameters->{'diary_id'};
     my $entry_id = $c->req->parameters->{entry_id};
 
-    my $entry = Intern::Diary::Service::Entry->delete_entry(
+    Intern::Diary::Service::Entry->delete_entry(
         $c->db,{ 
             entry_id => $entry_id,
          }
     );
-    $c->res->redirect("/diary/$entry_id/entries");
+
+
+    $c->res->redirect("/diary/$diary_id/entries/list");
 }
 
 sub create_entry_form {
-    my ($class, $c) = @_;    
+    my ($class, $c) = @_;
     $c->html('entry/create_entry.html');
 }
 
