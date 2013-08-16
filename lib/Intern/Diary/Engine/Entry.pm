@@ -39,8 +39,6 @@ sub show_entry {
         entry_id => $entry_id,
     });
 
-    use Data::Dumper; warn Dumper $comments;
-
     $c->html('entry/show_entry.html', {
             entry => $entry,
             comments => $comments
@@ -54,7 +52,6 @@ sub show_entries {
     my $entry_id = $c->req->parameters->{entry_id};
     my $page = $c->req->parameters->{page} // 1;
     my $diary_id = $c->req->parameters->{'diary_id'};
-
     my $limit = $c->req->parameters->{limit};
     my $offset = ($page - 1) * $limit ;
 
@@ -118,7 +115,6 @@ sub delete_entry {
          }
     );
 
-
     $c->res->redirect("/diary/$diary_id/entries/list");
 }
 
@@ -145,8 +141,6 @@ sub create_comment {
         comment => $comment
     });
 
-    use Data::Dumper; warn Dumper "えんとりいあいでぃい".$entry_id;
-
     $c->res->redirect("/diary/$diary_id/entry/$entry_id");
 
 }
@@ -154,21 +148,12 @@ sub create_comment {
 sub create_entry {
     my ($class, $c) = @_; 
 
-    my $params = $c->req->parameters;
-
-    my $name = $ENV{USER};
-    my $user = Intern::Diary::Service::User->find_user_by_name(
-        $c->db,
-        { name => $name }
-    );
-
     my $diary_id = $c->req->parameters->{diary_id}; 
     my $title = $c->req->parameters->{entry_title}; 
     my $body = $c->req->parameters->{entry_body}; 
 
     Intern::Diary::Service::Entry->create(
         $c->db,{ 
-            user_id => $user->{'user_id'},
             diary_id=> $diary_id,
             title   => $title,
             body    => $body
@@ -176,7 +161,6 @@ sub create_entry {
     );
     
     $c->html('entry/created_entry.html',{
-            params => $params,
             title => $title,
             body=> $body
         }
