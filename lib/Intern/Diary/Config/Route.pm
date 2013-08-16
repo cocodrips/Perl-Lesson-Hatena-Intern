@@ -103,6 +103,11 @@ sub make_router {
         # 
         # Api
         # 
+        connect '/diary/{diary_id}/jsoncheck' => {
+            engine => 'Api',
+            action => 'default',
+        } => { method => 'GET' };
+
         connect '/diary/{diary_id}/entry/list/json' => {
             engine => 'Api',
             action => 'get_entries_list_by_json',

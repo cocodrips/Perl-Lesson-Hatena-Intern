@@ -32,5 +32,16 @@ sub updated {
     };
 }
 
+sub TO_JSON {
+    my ($self) = @_;
+    return {
+        entry_id    => JSON::Types::number $self->entry_id,
+        title       => $self->title,
+        body        => $self->body,
+        diary_id    => JSON::Types::string $self->diary_id,
+        created     => JSON::Types::string $self->created,
+        updated     => JSON::Types::string $self->updated,
+    };
+}
 
 1;
