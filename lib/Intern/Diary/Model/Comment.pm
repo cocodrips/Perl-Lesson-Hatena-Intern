@@ -9,7 +9,6 @@ use JSON::Types qw();
 use Class::Accessor::Lite (
     ro => [qw(
         comment_id
-        user_id
         entry_id 
         comment
     )],

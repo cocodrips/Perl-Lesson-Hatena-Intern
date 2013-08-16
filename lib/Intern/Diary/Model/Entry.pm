@@ -10,7 +10,6 @@ use Class::Accessor::Lite (
     ro => [qw(
         entry_id
         title
-        user_id
         diary_id
         body
     )],
@@ -20,6 +19,13 @@ use Class::Accessor::Lite (
 use Intern::Diary::Util;
 
 sub created {
+    my ($self) = @_;
+    $self->{_created} ||= eval {
+        Intern::Diary::Util::datetime_from_db($self->{created});
+    };
+}
+
+sub updated {
     my ($self) = @_;
     $self->{_created} ||= eval {
         Intern::Diary::Util::datetime_from_db($self->{created});

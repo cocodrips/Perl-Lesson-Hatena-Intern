@@ -38,7 +38,8 @@ sub add_entry {
     my $diary_id = $diary->{'diary_id'};
 
     print "Please input text (.o.)/ >>\t";
-    my $body=<STDIN>;
+
+    my $body= do { local $/; <STDIN>; };
     chomp($body);
 
     Intern::Diary::Service::Entry->create($db, +{ title => $title, user_id => $user_id, diary_id => $diary_id, body => $body });
@@ -47,9 +48,10 @@ sub add_entry {
 }
 
 sub list_entries {
-    my $user = create_user();
-    my $user_id = $user->{'user_id'};   #get_user
-    my $entries = Intern::Diary::Service::Entry->get_all_entries_by_user($db, +{ user_id => $user_id });
+    my $diary = get_diary();
+    my $entries = Intern::Diary::Service::Entry->get_all_entries_by_diary_id($db, +{ 
+        diary_id => $diary->{'diary_id'}
+    });
     
     print "entry_id\ttitle\t\tbody\n";
     print "--------------------------------------\n";

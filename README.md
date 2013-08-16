@@ -20,20 +20,22 @@ $ script/appup
 ```
 
 ##user
-	id bigint
-	name unique string(32)
-	cretated TIMESTAMP
-	diary bigint 
+* **user_id** bigint
+* name unique string(32)
+* cretated TIMESTAMP
+
 	
 
 ##diary
-	id bigint
-	user_id
-	title 
+* **diart_id** bigint
+* name
+* user_id
+* created
+* updated entry編集時に更新
 
 ##entry
-	id
-	entree_id
-	comment
-	date
-	
+* entree_id
+* diary_id
+* comment
+* created
+* updated	

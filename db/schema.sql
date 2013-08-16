@@ -3,8 +3,7 @@ CREATE TABLE user (
     `name` VARBINARY(32) NOT NULL,
     `created` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     PRIMARY KEY (user_id),
-    UNIQUE KEY (name),
-    KEY (created)
+    UNIQUE KEY (name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -16,37 +15,26 @@ CREATE TABLE diary (
     `updated` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     PRIMARY KEY (diary_id),
     KEY (user_id),
-    KEY (name),
-    KEY (updated)
+    KEY (name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE entry (
     `entry_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `user_id` BIGINT UNSIGNED NOT NULL,
     `diary_id` BIGINT UNSIGNED NOT NULL,
     `title` VARBINARY(512) NOT NULL,
     `body` VARBINARY(512) NOT NULL,
     `created` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     `updated` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     PRIMARY KEY (entry_id),
-    KEY (user_id),
-    KEY (diary_id),
-    KEY (title),
-    KEY (body),
-    KEY (created)
+    KEY (diary_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE comment (
     `comment_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `user_id` BIGINT UNSIGNED NOT NULL,
     `entry_id` BIGINT UNSIGNED NOT NULL,
     `comment` VARBINARY(512) NOT NULL,
     `created` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
-    `updated` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     PRIMARY KEY (comment_id),
-    KEY (user_id),
-    KEY (entry_id),
-    KEY (comment),
-    KEY (updated)
+    KEY (entry_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

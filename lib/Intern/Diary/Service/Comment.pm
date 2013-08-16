@@ -40,19 +40,15 @@ sub get_all_comment_by_entry_id {
 
 sub create {
     my ($class, $db, $args) = @_;
-
-    my $user_id = $args->{user_id} // croak 'user_id required';
     my $entry_id = $args->{entry_id} // croak 'entry_id required';
     my $comment = $args->{comment} // croak 'comment required';
 
     $db->dbh('intern_diary')->query(q[
         INSERT INTO comment
-        SET user_id  = :user_id,
-        entry_id  = :entry_id,
+        SET entry_id  = :entry_id,
         comment  = :comment,
         created = :created
     ], {
-        user_id     => $user_id,
         entry_id    => $entry_id,
         comment     => $comment,
         created => DateTime->now,
