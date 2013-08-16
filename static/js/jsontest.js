@@ -5,14 +5,31 @@ $(function(){
     $('#get-json-btn').bind('click',function(e){
         getEntries(page, limit);
         $('#pager').fadeIn(400);
+        $('#add-entry').show();
         $(this).hide();
     });
 
-    $('#myModal').on('show', function (e) {
-    if (!data) return e.preventDefault() // stops modal from being shown
-})
-
     $('#current-page').text(page);
+
+    $('#add-entry-submit').bind('click',function(e){
+        e.preventDefault();
+
+        $.ajax({
+            url: 'entry/create',
+            type: 'POST',
+            data: $(this).closest('form').serialize()
+        })
+        .done(function() {
+            getEntries(page, limit);
+            $('#add-entry-modal').modal('hide');
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });
 
     $('#next-btn').bind('click',function(e){
         getEntries(++page, limit);

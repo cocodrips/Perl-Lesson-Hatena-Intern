@@ -2,7 +2,7 @@
 <div class="row-fluid">
     <div class="span8">
         <div style="float:right">
-            <a class="tagsinput-add btn-warning" id="add-entry" role="button" data-toggle="modal" style="margin-top:20px" href="#add"></a>
+            <a href="#add-entry-modal" class="tagsinput-add btn-warning" id="add-entry" role="button" data-toggle="modal" style="margin-top:20px; display:none;" href="#add"></a>
         </div>
         <h2>API/JSON TEST!</h2>
     </div>
@@ -29,6 +29,29 @@
   </div>
 </div>
 
+
+<!-- Modal -->
+<div id="add-entry-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <form class="pure-form" action="entry/create" method="post" accept-charset="utf-8">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Create Entry</h3>
+    </div>
+    <div class="modal-body">
+      <h5>Title</h5>
+      <hr>
+      <input type="text" name="entry_title" value="" placeholder="Diary name">
+
+      <h5>内容</h5>
+      <hr>
+      <textarea name="entry_body" placeholder="内容をかく"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <button class="btn btn-primary" id="add-entry-submit">Create</button>
+    </div>
+  </form>
+</div>
 
 
 <script src="/js/jquery-1.8.3.min.js"></script>

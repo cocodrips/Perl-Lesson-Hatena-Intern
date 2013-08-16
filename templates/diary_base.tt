@@ -14,13 +14,19 @@
 </head>
 <body>
 
+<h2></h2>
  <div class="container-fluid">
   <div class="row-fluid">
     <div class="span3">
-      <h2>Diary title</h2>
 
-
+      <h2> Diary title</h2>
       <div class="todo mrm">
+
+        <div class="todo-search">
+          <h2>Menu</h2>
+
+        </div>
+
         <ul>
           <li>
             <div class="todo-icon fui-chat"></div>
