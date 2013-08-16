@@ -11,7 +11,7 @@
      <a href="/diary/[% c.req.parameters.get('diary_id') %]/entry/[% entry.entry_id %]" class="e-title">[% entry.title %]
      </a>
      <br>
-   [% entry.body %]
+   [% html_line_break(entry.body) %]
   </div>
 </div>
 [% END %]

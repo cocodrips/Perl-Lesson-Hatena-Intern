@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use utf8;
 
+use JSON::Types;
+
 use Intern::Diary::Service::User;
 use Intern::Diary::Service::Diary;
 use Intern::Diary::Service::Entry;
@@ -26,3 +28,5 @@ sub get_entries_list_by_json{
     );
 
 }
+
+1;

@@ -104,8 +104,8 @@ sub make_router {
         # Api
         # 
         connect '/diary/{diary_id}/entry/list/json' => {
-            engine => 'User',
-            action => 'register',
+            engine => 'Api',
+            action => 'get_entries_list_by_json',
         } => { method => 'GET' };
 
 

@@ -77,9 +77,15 @@ sub json {
     my ($self, $hash) = @_;
 
     require JSON::XS;
+
+    my $json = JSON::XS->new;
+    $json->utf8(1);
+    $json->allow_blessed(1);
+    $json->convert_blessed(1);
+
     $self->response->code(200);
     $self->response->content_type('application/json; charset=utf-8');
-    $self->response->content(JSON::XS::encode_json($hash));
+    $self->response->content($json->encode($hash));
 }
 
 sub plain_text {
