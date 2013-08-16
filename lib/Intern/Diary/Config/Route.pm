@@ -99,6 +99,16 @@ sub make_router {
             engine => 'User',
             action => 'register',
         } => { method => 'POST' };
+
+        # 
+        # Api
+        # 
+        connect '/diary/{diary_id}/entry/list/json' => {
+            engine => 'User',
+            action => 'register',
+        } => { method => 'GET' };
+
+
     };
 }
 
