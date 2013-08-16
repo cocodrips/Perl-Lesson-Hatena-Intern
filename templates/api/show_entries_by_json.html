@@ -2,22 +2,18 @@
 <div class="row-fluid">
     <div class="span8">
         <div style="float:right">
-            <a href="#add-entry-modal" class="tagsinput-add btn-warning" id="add-entry" role="button" data-toggle="modal" style="margin-top:20px; display:none;" href="#add"></a>
+            <a href="#add-entry-modal" class="tagsinput-add btn-warning" id="add-entry" role="button" data-toggle="modal" style="margin-top:20px;" href="#add"></a>
         </div>
         <h2>API/JSON TEST!</h2>
     </div>
 </div>
 
-
-<div class="row-fluid">
-    <button id="get-json-btn" class="span2 btn btn-large btn-block btn-warning">GET!</button>
-</div>
 <div id="contents" data-page="[% c.req.parameters.get('page') %]">
     [% c.req.parameters.get('page') %]
 
 </div>
 
-<div class="row-fluid" id="pager" style="display:none;" >
+<div class="row-fluid" id="pager">
   <div class="span8" style="text-align: center;" >
     <div class="btn-toolbar">
     <div class="btn-group">

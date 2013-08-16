@@ -1,13 +1,7 @@
-var page = 1;
-var limit = 3;
-
 $(function(){
-    $('#get-json-btn').bind('click',function(e){
-        getEntries(page, limit);
-        $('#pager').fadeIn(400);
-        $('#add-entry').show();
-        $(this).hide();
-    });
+    var page = 1;
+    var limit = 3;
+    getEntries(page, limit);
 
     $('#current-page').text(page);
 
@@ -48,9 +42,8 @@ $(function(){
     });
 
     $('#add-entry').text(page);
-});
 
-function getEntries(nextPage, limitNum){
+    function getEntries(nextPage, limitNum){
     $.ajax({
         url: "entry/list/json?page="+nextPage+"&limit="+limitNum,
     }).done(function(json){
@@ -59,7 +52,6 @@ function getEntries(nextPage, limitNum){
         alert('get json error!!!');
     });
 }
-
 
 function layoutEntries(json){
     if ($(json.entries).length < 3) {
@@ -105,3 +97,6 @@ function parseBody(text){
     var escaped = _.escape(text);
     return escaped.replace(/\n/g, '<br>');
 }
+
+});
+
