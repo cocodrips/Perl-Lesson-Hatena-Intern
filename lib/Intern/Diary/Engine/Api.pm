@@ -36,7 +36,6 @@ sub get_entries_list_by_json{
             entries => $entries
         }
     );
-
 }
 
 

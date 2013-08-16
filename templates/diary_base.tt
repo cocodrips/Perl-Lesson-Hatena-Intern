@@ -23,6 +23,7 @@
       <div class="todo mrm">
         <ul>
           <li>
+            <div class="todo-icon fui-chat"></div>
             <a href="/diary/[% c.req.parameters.get('diary_id') %]/entries?page=1" title="">
             <div class="todo-content">
               <h4 class="todo-name">
@@ -34,6 +35,7 @@
           </li>
 
           <li>
+            <div class="todo-icon fui-plus"></div>
             <a href="/diary/[% c.req.parameters.get('diary_id') %]/entry/create" title="">
             <div class="todo-content">
               <h4 class="todo-name">
@@ -45,6 +47,7 @@
           </li>
 
           <li>  
+            <div class="todo-icon fui-list"></div>
             <a href="/diary/[% c.req.parameters.get('diary_id') %]/entries/list" title="">
             <div class="todo-content">
               <h4 class="todo-name">
@@ -61,10 +64,7 @@
 
     </div>
     <div class="span9">
-      <div class="hero-unit">
         [% content %]
-
-      </div>          
     </div>
   </div>
 </div>

@@ -66,7 +66,7 @@ builder {
         };
     }
 
-    enable 'Static', path => qr<^/(?:images|js|css)/>, root => './static/';
+    enable 'Static', path => qr<^/(?:images|js|css|bootstrap|fonts)/>, root => './static/';
     enable 'Static', path => qr<^/favicon\.ico$>,      root => './static/images';
 
     enable 'Scope::Container';
