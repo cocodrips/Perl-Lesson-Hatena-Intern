@@ -46,8 +46,8 @@ sub add_entry {
 
     Intern::Diary::Service::Entry->create($db, +{ 
         title => $title, 
-        user_id => $user->{'user_id'},
-        diary_id => $diary->{'diary_id'}, 
+        user_id => $user->user_id,
+        diary_id => $diary->diary_id, 
         body => $body });
     
     print "Add Success!\n";
@@ -56,7 +56,7 @@ sub add_entry {
 sub list_entries {
     my $diary = get_diary();
     my $entries = Intern::Diary::Service::Entry->get_all_entries_by_diary_id($db, +{ 
-        diary_id => $diary->{'diary_id'}
+        diary_id => $diary->diary_id
     });
 
     # no entry
@@ -68,7 +68,7 @@ sub list_entries {
     print "entry_id\ttitle\t\tbody\n";
     print "--------------------------------------\n";
     for my $entry (@$entries) {
-        print $entry->{'entry_id'}."\t\t".$entry->{'title'}."\t\t".$entry->{'body'}."\n";
+        print $entry->entry_id."\t\t".$entry->title."\t\t".$entry->body."\n";
     }
 }
 
@@ -79,13 +79,13 @@ sub edit_entries {
     print "Edit title?\n";
     chomp(my $title = <STDIN>);
     if (!$title) {
-        $title = $entry->{'title'};
+        $title = $entry->title;
     }
 
     print "Edit Body?\n";
     chomp(my $body = <STDIN>);
     if (!$body) {
-        $body = $entry->{'body'};
+        $body = $entry->body;
     }
 
     $entry = Intern::Diary::Service::Entry->update($db, +{ entry_id => $entry_id, title => $title, body => $body});
@@ -108,7 +108,7 @@ sub delete_entry {
 
 sub add_comment{
     my $entry_id = shift @_;
-    my $user_id = get_user()->{'user_id'};
+    my $user_id = get_user()->user_id;
     if (!$user_id) {
         print "No user. please add entry.";
         return;
@@ -130,12 +130,12 @@ sub show_entry{
     
     print "entry_id\tbody\n";
     print "--------------------------------------\n";
-    print $entry->{'entry_id'}."\t\t".$entry->{'body'}."\n\n";
+    print $entry->entry_id."\t\t".$entry->body."\n\n";
 
     print "comment\n";
     print "--------------------------------------\n";
     for my $comment (@$comments) {
-        print $comment->{'comment'}."\n";
+        print $comment->comment."\n";
     }
 }
 
@@ -150,7 +150,7 @@ sub create_diary {
     unless ($diary) {
         $diary = Intern::Diary::Service::Diary->create($db, +{ 
             name => $name,
-            get_user()->{'user_id'}
+            get_user()->user_id
             });    
     }
 }
