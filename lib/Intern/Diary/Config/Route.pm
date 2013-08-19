@@ -113,6 +113,11 @@ sub make_router {
             action => 'get_entries_list_by_json',
         } => { method => 'GET' };
 
+        connect '/diary/{diary_id}/edit/entry/{entry_id}/json' => {
+            engine => 'Api',
+            action => 'update_entry_by_json',
+        } => { method => 'GET' };
+
 
     };
 }

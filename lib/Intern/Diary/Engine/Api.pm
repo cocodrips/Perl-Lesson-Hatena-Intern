@@ -12,12 +12,12 @@ use Intern::Diary::Service::Entry;
 use Intern::Diary::Service::Comment;
 
 
-sub default{
+sub default {
     my ($class, $c) = @_; 
     $c->html('api/show_entries_by_json.html');
 }
 
-sub get_entries_list_by_json{
+sub get_entries_list_by_json {
     my ($class, $c) = @_; 
     my $diary_id = $c->req->parameters->{'diary_id'};
     my $page = $c->req->parameters->{'page'} || 1;
@@ -38,6 +38,20 @@ sub get_entries_list_by_json{
     );
 }
 
+sub update_entry_by_json {
+    my ($class, $c) = @_;
+    my $entry_id = $c->req->parameters->{'entry_id'};
+    my $title    = $c->req->parameters->{'title'};
+    my $body     = $c->req->parameters->{'body'};
+
+    Intern::Diary::Service::Entry->update(
+        $c->db, { 
+            entry_id => $entry_id,
+            title    => $title,
+            body     => $body
+         }
+    );
+}
 
 
 

@@ -65,16 +65,16 @@ sub get_limited_entries_by_diary_id {
 sub update {
     my ($class, $db, $args) = @_;
 
+    my $entry_id = $args->{entry_id} // croak 'entry_id required';
     my $title = $args->{title} // croak 'title required';
     my $body = $args->{body} // croak 'body required';
-    my $entry_id = $args->{entry_id} // croak 'entry_id required';
 
     $db->dbh('intern_diary')->query(q[
         UPDATE entry
-        SET title   = :title,
-        body        = :body,
-        updated     = :updated
-        WHERE entry_id = :entry_id
+        SET title       = :title,
+        body            = :body,
+        updated         = :updated
+        WHERE entry_id  = :entry_id
     ], {
         title       => $title,
         body        => $body,
