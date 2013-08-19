@@ -7,6 +7,7 @@ use utf8;
 use Carp;
 use DateTime;
 
+# nameはUNIQUEでないので、下のby_idを用いる
 sub find_diary_by_name {
     my ($class, $db, $args) = @_;
 
@@ -41,6 +42,7 @@ sub create {
     my ($class, $db, $args) = @_;
 
     my $name = $args->{name} // croak 'name required';
+    my $name = $args->{user_id} // croak 'user_id required';
 
     $db->dbh('intern_diary')->query(q[
         INSERT INTO diary

@@ -10,7 +10,7 @@ use DateTime;
 sub find_comment_by_id {
     my ($class, $db, $args) = @_;
 
-    my $comment_id = $args->{comment_id} // croak 'name required';
+    my $comment_id = $args->{comment_id} // croak 'comment_id required';
 
     my $comment = $db->dbh('intern_diary')->select_row_as(q[
         SELECT * FROM comment
@@ -22,14 +22,15 @@ sub find_comment_by_id {
     $comment;
 }
 
-sub get_all_comment_by_entry_id {
+sub get_all_comments_by_entry_id {
     my ($class, $db, $args) = @_;
 
-    my $entry_id = $args->{entry_id} // croak 'name required';
+    my $entry_id = $args->{entry_id} // croak 'entry_id required';
 
     my $comments = $db->dbh('intern_diary')->select_all_as(q[
         SELECT * FROM comment
         WHERE entry_id = :entry_id
+        ORDER BY created DESC
     ], +{
         entry_id => $entry_id
     }, 'Intern::Diary::Model::Comment');

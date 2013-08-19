@@ -35,7 +35,7 @@ sub show_entry {
          }
     );
 
-    my $comments = Intern::Diary::Service::Comment->get_all_comment_by_entry_id($c->db, +{ 
+    my $comments = Intern::Diary::Service::Comment->get_all_comments_by_entry_id($c->db, +{ 
         entry_id => $entry_id,
     });
 

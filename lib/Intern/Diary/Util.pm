@@ -4,10 +4,6 @@ use strict;
 use warnings;
 use utf8;
 
-use Carp ();
-use Sub::Name;
-
-use DateTime;
 use DateTime::Format::MySQL;
 
 use Intern::Diary::Config;

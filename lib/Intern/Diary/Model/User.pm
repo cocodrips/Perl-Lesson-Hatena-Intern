@@ -3,9 +3,6 @@ package Intern::Diary::Model::User;
 use strict;
 use warnings;
 use utf8;
-use DateTime;
-
-use JSON::Types qw();
 
 use Class::Accessor::Lite (
     ro => [qw(

@@ -5,12 +5,12 @@ use warnings;
 use utf8;
 
 use Carp;
-use DateTime;
+use DateTime::Format::MySQL;
 
 sub find_entry_by_id {
     my ($class, $db, $args) = @_;
 
-    my $entry_id = $args->{entry_id} // croak 'name required';
+    my $entry_id = $args->{entry_id} // croak 'entry_id required';
 
     my $entry = $db->dbh('intern_diary')->select_row_as(q[
         SELECT * FROM entry

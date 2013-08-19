@@ -12,7 +12,6 @@ CREATE TABLE diary (
     `name` VARBINARY(512) NOT NULL,
     `user_id` BIGINT UNSIGNED NOT NULL,
     `created` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
-    `updated` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     PRIMARY KEY (diary_id),
     KEY (user_id),
     KEY (name)
