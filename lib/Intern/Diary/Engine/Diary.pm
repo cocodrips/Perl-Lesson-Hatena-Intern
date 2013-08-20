@@ -68,6 +68,12 @@ sub create_diary_form {
 sub create_diary {
     my ($class, $c) = @_;
 
+    my $name = $ENV{USER};
+    my $user = Intern::Diary::Service::User->find_user_by_name(
+        $c->db,
+        { name => $name }
+    );
+
     my $new_diary_name = $c->req->parameters->{diary_name};
     if (!$new_diary_name) {
         warn "--noname--";
@@ -75,8 +81,10 @@ sub create_diary {
     }
 
     my $diary = Intern::Diary::Service::Diary->create(
-        $c->db,
-        { name => $new_diary_name }
+        $c->db,{ 
+            name => $new_diary_name,
+            user_id => $user->user_id
+        }
     );
     
     $c->html('diary/create_diary.html');

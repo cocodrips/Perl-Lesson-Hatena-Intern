@@ -40,7 +40,7 @@ sub find_diary_by_id {
 
 sub create {
     my ($class, $db, $args) = @_;
-
+    
     my $name = $args->{name} // croak 'name required';
     my $name = $args->{user_id} // croak 'user_id required';
 
