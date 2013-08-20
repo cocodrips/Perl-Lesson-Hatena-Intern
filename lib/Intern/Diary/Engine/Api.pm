@@ -27,8 +27,8 @@ sub get_entries_list_by_json {
     my $entries = Intern::Diary::Service::Entry->get_limited_entries_by_diary_id(
         $c->db,{ 
             diary_id => $diary_id,
-            limit   => $limit,
-            offset    => $offset
+            limit    => $limit,
+            offset   => $offset
          }
     );
 
@@ -53,7 +53,23 @@ sub update_entry_by_json {
     );
 }
 
+sub create_entry_by_json {
+    my ($class, $c) = @_;
+    my $diary_id = $c->req->parameters->{'diary_id'};
+    my $title    = $c->req->parameters->{'title'};
+    my $body     = $c->req->parameters->{'body'};
 
+    warn $title;
+    warn $body;
 
+    Intern::Diary::Service::Entry->create(
+        $c->db, { 
+            diary_id => $diary_id,
+            title    => $title,
+            body     => $body
+         }
+    );
+    $c->res->redirect("/diary/$diary_id/entry/list/json");
+}
 
 1;

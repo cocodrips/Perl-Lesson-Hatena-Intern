@@ -88,7 +88,7 @@ sub update_entry_form {
 
 sub update_entry {
     my ($class, $c) = @_;
-    my $diary_id = $c->req->parameters->{'diary_id'};
+    my $diary_id = $c->req->parameters->{diary_id};
     my $entry_id = $c->req->parameters->{entry_id};
     my $title = $c->req->parameters->{title};
     my $body = $c->req->parameters->{body};
@@ -106,7 +106,7 @@ sub update_entry {
 
 sub delete_entry {
     my ($class, $c) = @_;
-    my $diary_id = $c->req->parameters->{'diary_id'};
+    my $diary_id = $c->req->parameters->{diary_id};
     my $entry_id = $c->req->parameters->{entry_id};
 
     Intern::Diary::Service::Entry->delete_entry(
