@@ -116,12 +116,12 @@ sub make_router {
         connect '/diary/{diary_id}/edit/entry/{entry_id}/json' => {
             engine => 'Api',
             action => 'update_entry_by_json',
-        } => { method => 'GET' };
+        } => { method => 'POST' };
 
-        connect '/diary/{diary_id}/entry/create/json' => {
+        connect '/diary/{diary_id}/entry/create/jsopn' => {
             engine => 'Api',
             action => 'create_entry_by_json',
-        };
+        } => { method => 'POST' };;
 
 
     };
