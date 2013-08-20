@@ -13,12 +13,13 @@ use Intern::Diary::Service::Comment;
 my $command = shift @ARGV || 'add';
 
 my %HANDLERS = (
-    add   => \&add_entry,
-    list   => \&list_entries,
-    edit   => \&edit_entries,
-    delete => \&delete_entry,
+    add     => \&add_entry,
+    list    => \&list_entries,
+    edit    => \&edit_entries,
+    delete  => \&delete_entry,
     comment => \&add_comment,
-    show => \&show_entry
+    show    => \&show_entry,
+    adduser => \&create_user
 );
 
 $ENV{INTERN_DIARY_ENV} = 'local';
@@ -161,15 +162,17 @@ sub get_diary {
     return $diary;
 }
 
-sub create_user{
-    my $name = $ENV{USER};
-    my $user = get_user();
+sub create_user {
+    # my $name = $ENV{USER};
+    my $name = "nya";
+
+    my $user = undef;
     unless ($user) {
         $user = Intern::Diary::Service::User->create_user($db, +{ name => $name });
     }
 }
 
-sub get_user{
+sub get_user {
     my $name = $ENV{USER};
     my $user = Intern::Diary::Service::User->find_user_by_name($db, +{ name => $name });
     return $user;

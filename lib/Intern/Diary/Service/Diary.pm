@@ -40,16 +40,18 @@ sub find_diary_by_id {
 
 sub create {
     my ($class, $db, $args) = @_;
-    
+
     my $name = $args->{name} // croak 'name required';
-    my $name = $args->{user_id} // croak 'user_id required';
+    my $user_id = $args->{user_id} // croak 'user_id required';
 
     $db->dbh('intern_diary')->query(q[
         INSERT INTO diary
         SET name  = :name,
-        created = :created
+         user     = :user_id,
+        created   = :created
     ], {
-        name     => $name,
+        name    => $name,
+        user_id => $user_id,
         created => DateTime->now,
     });
 
