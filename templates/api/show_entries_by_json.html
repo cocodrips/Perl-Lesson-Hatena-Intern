@@ -1,14 +1,22 @@
 [% WRAPPER 'diary_base.tt' %]
+
+
 <div class="row-fluid">
     <div class="span8">
         <div style="float:right">
             <a href="#add-entry-modal" class="tagsinput-add btn-warning" id="add-entry" role="button" data-toggle="modal" style="margin-top:20px;" href="#add"></a>
         </div>
         <h2>API/JSON TEST!</h2>
+          <div id="alert-box">
+          </div>
     </div>
 </div>
 
+
+
+
 <div id="contents" data-page="[% c.req.parameters.get('page') %]">
+
     [% c.req.parameters.get('page') %]
 
 </div>
@@ -24,6 +32,7 @@
     </div>
   </div>
 </div>
+
 
 
 <!-- Modal -->

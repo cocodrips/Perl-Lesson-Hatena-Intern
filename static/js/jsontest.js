@@ -18,7 +18,7 @@ $(function(){
             $('#add-entry-modal').modal('hide');
         })
         .fail(function() {
-            console.log("error");
+            myalert("エントリーが見つかりません");
         })
         .always(function() {
             console.log("complete");
@@ -44,59 +44,73 @@ $(function(){
     $('#add-entry').text(page);
 
     function getEntries(nextPage, limitNum){
-    $.ajax({
-        url: "entry/list/json?page="+nextPage+"&limit="+limitNum,
-    }).done(function(json){
-        layoutEntries(json);
-    }).fail(function(json){
-        alert('get json error!!!');
-    });
-}
-
-function layoutEntries(json){
-    if ($(json.entries).length < 3) {
-        $('#next-btn').hide();
-    }else{
-        $('#next-btn').show();
-    }
-    
-    $('#current-page').text(page);
-    $('#contents').fadeOut('400', function() {
-        $('#contents').html("");
-        $.each(json.entries, function() {
-            var row = $('<div/>',{
-                "class" : "row-fluid",
-            }).appendTo('#contents');
-
-            var roundObj = $('<div/>',{
-                "class" : "palette palette-wet-asphalt span8 round",
-            }).appendTo(row);
-
-            var titleObj = $('<div/>',{
-                "class" : "e-title",
-                "text"  : this.title,
-            }).appendTo(roundObj);
-
-            var dateObj = $('<div/>',{
-                "class" : "span2 round date",
-                "text"  : this.created,
-            }).appendTo(titleObj);
-
-            var bodyObj = $('<div/>').appendTo(roundObj);
-            bodyObj.html(parseBody(this.body));
-
-            row.css('margin-bottom', '30px');
+        $.ajax({
+            dataType : "json",
+            url: "entry/list/json?page="+nextPage+"&limit="+limitNum,
+        }).done(function(json){
+            layoutEntries(json);
+        }).fail(function(json){
+            myalert("データの取得に失敗しました");
         });
+    }
 
-        $('#contents').fadeIn('400');
-    });
-}
+    function layoutEntries(json){
+        if ($(json.entries).length < 3) {
+            $('#next-btn').hide();
+        }else{
+            $('#next-btn').show();
+        }
 
-function parseBody(text){
-    console.log(text);
-    var escaped = _.escape(text);
-    return escaped.replace(/\n/g, '<br>');
-}
+        if($(json.entries).length < 1){
+            myalert("エントリーが見つかりません");
+            return;
+        }
+        
+        $('#current-page').text(page);
+        $('#contents').fadeOut('400', function() {
+            $('#contents').html("");
+            $.each(json.entries, function() {
+                var row = $('<div/>',{
+                    "class" : "row-fluid",
+                }).appendTo('#contents');
 
+                var roundObj = $('<div/>',{
+                    "class" : "palette palette-wet-asphalt span8 round",
+                }).appendTo(row);
+
+                var titleObj = $('<div/>',{
+                    "class" : "e-title",
+                    "text"  : this.title,
+                }).appendTo(roundObj);
+
+                var dateObj = $('<div/>',{
+                    "class" : "span2 round date",
+                    "text"  : this.created,
+                }).appendTo(titleObj);
+
+                var bodyObj = $('<div/>').appendTo(roundObj);
+                bodyObj.html(parseBody(this.body));
+
+                row.css('margin-bottom', '30px');
+            });
+
+            $('#contents').fadeIn('400');
+        });
+    }
+
+    function parseBody(text){
+        console.log(text);
+        var escaped = _.escape(text);
+        return escaped.replace(/\n/g, '<br>');
+    }
+
+    function myalert(text){
+        var alert = $('<div/>',{
+                    "class" : "alert",
+                    "text"  : text,
+                }).appendTo($("#alert-box"));
+    }
 });
+
+
 
