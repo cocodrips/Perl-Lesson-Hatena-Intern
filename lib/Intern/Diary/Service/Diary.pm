@@ -7,22 +7,6 @@ use utf8;
 use Carp;
 use DateTime;
 
-# nameはUNIQUEでないので、下のby_idを用いる
-sub find_diary_by_name {
-    my ($class, $db, $args) = @_;
-
-    my $name = $args->{name} // croak 'name required';
-
-    my $diary = $db->dbh('intern_diary')->select_row_as(q[
-        SELECT * FROM diary
-        WHERE name = :name
-    ], +{
-        name => $name
-    }, 'Intern::Diary::Model::Diary');
-
-    $diary;
-}
-
 sub find_diary_by_id {
     my ($class, $db, $args) = @_;
 
@@ -47,16 +31,12 @@ sub create {
     $db->dbh('intern_diary')->query(q[
         INSERT INTO diary
         SET name  = :name,
-         user     = :user_id,
+        user_id   = :user_id,
         created   = :created
     ], {
         name    => $name,
         user_id => $user_id,
         created => DateTime->now,
-    });
-
-    return $class->find_diary_by_name($db, {
-        name => $name,
     });
 }
 

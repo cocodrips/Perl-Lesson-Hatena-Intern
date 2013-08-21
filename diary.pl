@@ -19,7 +19,8 @@ my %HANDLERS = (
     delete  => \&delete_entry,
     comment => \&add_comment,
     show    => \&show_entry,
-    adduser => \&create_user
+    adduser => \&create_user,
+    adddiary => \&create_diary
 );
 
 $ENV{INTERN_DIARY_ENV} = 'local';
@@ -56,16 +57,19 @@ sub add_entry {
 
 sub list_entries {
     my $diary = get_diary();
+    if (!$diary) {
+        print "no diary. 'adddiary'";
+        return;
+    }
     my $entries = Intern::Diary::Service::Entry->get_all_entries_by_diary_id($db, +{ 
         diary_id => $diary->diary_id
     });
 
-    # no entry
-    if (!$#$entries) {
+    unless (@$entries){
         print "no entry";
         return;
     }
-    
+
     print "entry_id\ttitle\t\tbody\n";
     print "--------------------------------------\n";
     for my $entry (@$entries) {
@@ -109,9 +113,9 @@ sub delete_entry {
 
 sub add_comment{
     my $entry_id = shift @_;
-    my $user_id = get_user()->user_id;
-    if (!$user_id) {
-        print "No user. please add entry.";
+    my $user = get_user();
+    if (!$user) {
+        print "No user. 'adduser'.";
         return;
     }
     print "please input ".$entry_id. " comment >>";
@@ -120,7 +124,7 @@ sub add_comment{
         $comment = "comment test";
     }
 
-    Intern::Diary::Service::Comment->create($db, +{ entry_id => $entry_id, user_id => $user_id, comment => $comment });
+    Intern::Diary::Service::Comment->create($db, +{ entry_id => $entry_id, user_id => $user->user_id, comment => $comment });
 }
 
 # 記事の内容、コメントの確認
@@ -144,29 +148,27 @@ sub show_entry{
 
 sub create_diary {
     my $name = 'MyDiary';
-    
-    my $diary = Intern::Diary::Service::Diary->find_diary_by_name($db, +{ 
-        name => $name
-        });
-    unless ($diary) {
-        $diary = Intern::Diary::Service::Diary->create($db, +{ 
-            name => $name,
-            get_user()->user_id
-            });    
+    my $user = get_user();
+    if(!$user){
+        print "no user. 'adduser'";
+        return;
     }
+    
+    my $diary = Intern::Diary::Service::Diary->create($db, +{ 
+        name => $name,
+        user_id => $user->user_id
+    });    
 }
 
 sub get_diary {
     my $name = 'MyDiary';
-    my $diary = Intern::Diary::Service::Diary->find_diary_by_name($db, +{ name => $name });
+    my $diary = Intern::Diary::Service::Diary->find_diary_by_id($db, +{ diary_id => 1 });
     return $diary;
 }
 
 sub create_user {
-    # my $name = $ENV{USER};
-    my $name = "nya";
-
-    my $user = undef;
+    my $name = $ENV{USER};
+    my $user = get_user();
     unless ($user) {
         $user = Intern::Diary::Service::User->create_user($db, +{ name => $name });
     }

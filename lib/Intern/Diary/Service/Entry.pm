@@ -6,6 +6,7 @@ use utf8;
 
 use Carp;
 use DateTime::Format::MySQL;
+use DateTime;
 
 sub find_entry_by_id {
     my ($class, $db, $args) = @_;
