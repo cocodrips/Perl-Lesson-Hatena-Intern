@@ -1,115 +1,45 @@
 var Timer = function(time){
     this.time = time;
-    this.timer;
-
+    this.method = [];
+    this.timer = undefined;
 };
 
 Timer.prototype.addListener = function(callback){
-
+    this.method.push(callback);
 };
 
 Timer.prototype.start = function(){
     var self = this;
-    timer = setInterval(function(){
-        self.time --;
-        if (self.time < 1) {
-            self.stop();
+    this.timer = setTimeout(function(){
+        for (var i = self.method.length - 1; i >= 0; i--) {
+            self.method[i]();
         }
-    }, 1000);
+    }, this.time);
 };
 
 Timer.prototype.stop = function(){
-    clearInterval(this.timer);
+    clearTimeout(this.timer);
 };
 
 
-function countDown(){
-    count --;
-    timerElement.innerText = count;
-    if (count < 1) {
-        countStop();
-    }
-}
+var timer1 = new Timer(3000);
+var timer2 = new Timer(1000);
 
+timer1.addListener(timerAlert);
+timer1.addListener(timerAlert2);
+timer1.start();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var timerElement = document.getElementById("timer");
-
-var stopBtn = document.getElementById("timer-stop");
-stopBtn.addEventListener('click', function(){
-    countStop();
+timer2.addListener(function(){
+    timer1.stop();
+    alert("たいまーとめた");
 });
+// timer2.start();
 
-var startBtn = document.getElementById("timer-start");
-startBtn.addEventListener('click', function(){
-    timerStart(10);
-});
-
-var restartBtn = document.getElementById("timer-restart");
-restartBtn.addEventListener('click', function(){
-    timerRestart();
-});
-
-
-var count;
-var timer;
-var isStart;
-
-function timerStart(max){
-    if(isStart) return;
-    isStart = true;
-    btnAppear();
-    count = max;
-    timerElement.innerText = count;
-    timer = setInterval("countDown()",1000);
+function timerAlert(){
+    alert("たいまーおわた");
 }
 
-function timerRestart(){
-    if(isStart) return;
-    isStart = true;
-    btnAppear();
-    timer = setInterval("countDown()",1000);
-
+function timerAlert2(){
+    alert("たいまーおわたわけない");
 }
 
-function countDown(){
-    count --;
-    timerElement.innerText = count;
-    if (count < 1) {
-        countStop();
-    }
-}
-
-function countStop(){
-    clearInterval(timer);
-    isStart = false;
-    btnAppear();
-}
-
-function btnAppear(){
-    
-    if (isStart) {
-        startBtn.style.display = "none";
-        restartBtn.style.display = "none";
-        stopBtn.style.display = "inline-block";
-    } else {
-        stopBtn.style.display = "none";
-        startBtn.style.display = "inline-block";
-        restartBtn.style.display = "inline-block";
-    }
-
-}
