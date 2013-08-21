@@ -94,7 +94,6 @@ sub edit_entries {
     }
 
     $entry = Intern::Diary::Service::Entry->update($db, +{ entry_id => $entry_id, title => $title, body => $body});
-    print Dumper $entry;
 }
 
 sub delete_entry {

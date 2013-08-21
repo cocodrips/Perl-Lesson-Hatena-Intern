@@ -30,7 +30,6 @@ sub _accessor : Test(3) {
     );
     is $user->user_id, 1;
     is $user->name, 'user_name';
-    use Data::Dumper;
     is $user->created->epoch, $now->epoch;
 }
 

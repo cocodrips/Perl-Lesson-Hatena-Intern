@@ -28,7 +28,7 @@ sub created {
 
 sub updated {
     my ($self) = @_;
-    $self->{_created} ||= eval {
+    $self->{_updated} ||= eval {
         Intern::Diary::Util::datetime_from_db($self->{created});
     };
 }
