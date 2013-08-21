@@ -1,3 +1,52 @@
+var Timer = function(time){
+    this.time = time;
+    this.timer;
+
+};
+
+Timer.prototype.addListener = function(callback){
+
+};
+
+Timer.prototype.start = function(){
+    var self = this;
+    timer = setInterval(function(){
+        self.time --;
+        if (self.time < 1) {
+            self.stop();
+        }
+    }, 1000);
+};
+
+Timer.prototype.stop = function(){
+    clearInterval(this.timer);
+};
+
+
+function countDown(){
+    count --;
+    timerElement.innerText = count;
+    if (count < 1) {
+        countStop();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var timerElement = document.getElementById("timer");
 
 var stopBtn = document.getElementById("timer-stop");
