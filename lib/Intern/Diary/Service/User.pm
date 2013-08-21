@@ -32,8 +32,8 @@ sub create_user {
         SET name  = :name,
         created = :created
     ], {
-        name     => $name,
-        created => DateTime->now,
+        name    => $name,
+        created => DateTime->now
     });
 
     return $class->find_user_by_name($db, {

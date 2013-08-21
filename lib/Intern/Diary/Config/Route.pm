@@ -118,7 +118,7 @@ sub make_router {
             action => 'update_entry_by_json',
         } => { method => 'POST' };
 
-        connect '/diary/{diary_id}/entry/create/jsopn' => {
+        connect '/diary/{diary_id}/entry/create/json' => {
             engine => 'Api',
             action => 'create_entry_by_json',
         } => { method => 'POST' };;
