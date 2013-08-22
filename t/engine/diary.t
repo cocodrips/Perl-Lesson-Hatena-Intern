@@ -16,7 +16,7 @@ use Test::Intern::Diary::Factory;
 use Intern::Diary::Service::Diary;
 
 
-sub create_diary : Test(4) {
+sub create_diary : Test(2) {
     my $db = Intern::Diary::DBI::Factory->new();
     my $mech = create_mech;
 

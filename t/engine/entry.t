@@ -12,6 +12,7 @@ use Test::More;
 use String::Random qw(random_regex);
 use Test::Intern::Diary;
 use Test::Intern::Diary::Mechanize;
+use Test::Intern::Diary::Factory;
 use Intern::Diary::Service::Entry;
 use Intern::Diary::Service::Diary;
 
@@ -19,12 +20,15 @@ use Intern::Diary::Service::Diary;
 sub entries_list : Test(1) {
     my $db = Intern::Diary::DBI::Factory->new();
     my $mech = create_mech;
-    my $diary = Intern::Diary::Service::Diary->find_diary_by_name($db,
-        { name => $diary_name }
-    );
 
+    my $user = create_user;
+    create_diary(user_id => $user->user_id);
 
-    $mech->get_ok('/diary/');
+    my $diaries = Intern::Diary::Service::Diary->find_diaries_by_user_id($db, {
+        user_id => $user->user_id,
+    });
+
+    $mech->get_ok('/diary/'.$diaries->[0]->diary_id);
 }
 
 __PACKAGE__->runtests;
