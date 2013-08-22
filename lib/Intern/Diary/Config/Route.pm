@@ -86,7 +86,7 @@ sub make_router {
         connect '/diary/{diary_id}/delete/entry/{entry_id}' => {
             engine => 'Entry',
             action => 'delete_entry',
-        };
+        } => { method => 'POST' };
 
 
         # ユーザーを編集

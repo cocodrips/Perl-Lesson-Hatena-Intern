@@ -18,15 +18,29 @@
 
   <tr>
     <td>[% entry.entry_id %]</td>
-    <td><a class="pure-button pure-button-xsmall" href="/diary/[% c.req.parameters.get('diary_id') %]/entry/[% entry.entry_id %]" title="">[% entry.title %]</a></td>
-    <td><a class="pure-button pure-button-xsmall" href="/diary/[% c.req.parameters.get('diary_id') %]/edit/entry/[% entry.entry_id %]" title="">edit</a></td>
-    <td><a class="pure-button pure-button-xsmall" href="/diary/[% c.req.parameters.get('diary_id') %]/delete/entry/[% entry.entry_id %]" title="">delete</a></td>
+    <td><a class="" href="/diary/[% c.req.parameters.get('diary_id') %]/entry/[% entry.entry_id %]" title="">[% entry.title %]</a></td>
+    <td><a class="" href="/diary/[% c.req.parameters.get('diary_id') %]/edit/entry/[% entry.entry_id %]" title="">edit</a></td>
+    <td> 
+      <form action="/diary/[% c.req.parameters.get('diary_id') %]/delete/entry/[% entry.entry_id %]" method="post" accept-charset="utf-8">
+        <a href="#" class="delete-btn">delete</a>
+      </form>
+    </td>
   </tr>
   [% END %]
   </tbody>
 </table>
 </div>
 
+
+<script src="/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+$(function(){
+  $('.delete-btn').bind('click', function(e){
+    console.log("click");
+    $(this).parent('form').submit();
+  });
+});
+</script>
 
 
 [% END # WRAPPER %]
