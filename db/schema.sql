@@ -26,6 +26,7 @@ CREATE TABLE entry (
     `created` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     `updated` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
     PRIMARY KEY (entry_id),
+    KEY (created),
     KEY (diary_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
