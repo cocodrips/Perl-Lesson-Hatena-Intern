@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use utf8;
 
+use Carp;
 use Exporter::Lite;
 # 生の名前で呼べる
 our @EXPORT = qw(
@@ -42,6 +43,7 @@ sub create_user {
 
 sub create_diary {
     my %args = @_;
+    my $user_id = $args{user_id} // croak 'user_id required';
     my $name = $args{name} // random_regex('test_diary_\w{15}');
     my $created = $args{created} // DateTime->now;
 
@@ -50,13 +52,13 @@ sub create_diary {
     $dbh->query(q[
         INSERT INTO diary
         SET name = :name,
+        user_id = :user_id,
         created = :created
     ], {
         name    => $name,
+        user_id => $user_id,
         created => DateTime::Format::MySQL->format_datetime($created),
     });
-
-    return Intern::Diary::Service::Diary->find_diary_by_name($db, { name => $name });
 }
 
 sub create_entry {

@@ -23,30 +23,23 @@ sub _require : Test(startup => 1) {
     require_ok 'Intern::Diary::Service::Diary';
 }
 
-sub find_diary_by_name : Test(2) {
+sub create_diary_and_find_diaries :Test(1) {
     my ($self) = @_;
-
     my $db = Intern::Diary::DBI::Factory->new;
 
-    subtest 'diaryないとき失敗する' => sub {
-        dies_ok {
-            my $diary = Intern::Diary::Service::Diary->find_diary_by_name($db, {
-            });
-        };
-    };
+    my $user = create_user;
 
-    subtest 'diary見つかる' => sub {
-        my $created_diary = create_diary();
-
-        my $diary = Intern::Diary::Service::Diary->find_diary_by_name($db, {
-            name => $created_diary->name,
+    subtest 'userのdiaryを取ってこれるか' => sub {
+        Intern::Diary::Service::Diary->create($db, {
+            user_id => $user->user_id,
+            name => 1,
         });
 
-        ok $diary, 'userが引ける';
-        isa_ok $diary, 'Intern::Diary::Model::Diary', 'blessされている';
-        is $diary->name, $created_diary->name, 'nameが一致する';
+        my $diaries = Intern::Diary::Service::Diary->find_diaries_by_user_id($db, {
+            user_id => $user->user_id,
+        });
+        ok (scalar @$diaries == 1);
     };
-
 }
 
 __PACKAGE__->runtests;

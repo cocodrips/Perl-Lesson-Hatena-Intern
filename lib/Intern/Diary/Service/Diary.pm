@@ -22,6 +22,22 @@ sub find_diary_by_id {
     $diary;
 }
 
+sub find_diaries_by_user_id {
+    my ($class, $db, $args) = @_;
+
+    my $user_id = $args->{user_id} // croak 'user_id required';
+
+    my $diaries = $db->dbh('intern_diary')->select_all_as(q[
+        SELECT * FROM diary
+        WHERE user_id = :user_id
+    ], +{
+        user_id => $user_id
+    }, 'Intern::Diary::Model::Diary');
+
+    return $diaries;
+}
+
+
 sub create {
     my ($class, $db, $args) = @_;
 
