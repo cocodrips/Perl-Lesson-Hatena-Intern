@@ -50,8 +50,6 @@ sub show_diary {
         { diary_id => $diary_id }
     );
 
-    use Data::Dumper; warn Dumper $diary;
-    # use Data::Dumper; warn Dumper $entries;
     $c->html('diary/diary_top.html',
         {
             diary => $diary 

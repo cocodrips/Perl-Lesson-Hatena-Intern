@@ -12,6 +12,7 @@ use Test::More;
 use String::Random qw(random_regex);
 use Test::Intern::Diary;
 use Test::Intern::Diary::Mechanize;
+use Test::Intern::Diary::Factory;
 use Intern::Diary::Service::Diary;
 
 
@@ -22,18 +23,14 @@ sub create_diary : Test(4) {
     
     my $diary_name = random_regex('diary_name_\w{15}');
     $mech->get_ok('/diary/create');
+    my $user = create_user;
+    local $ENV{USER} = $user->name;
     $mech->submit_form_ok({
         fields => {
             diary_name     => $diary_name
         },
     });
 
-    my $diary = Intern::Diary::Service::Diary->find_diary_by_name($db,
-        { name => $diary_name }
-    );
-
-    ok $diary, 'Diaryが取得できた';
-    is $diary->{'name'}, $diary_name;
 }
 
 __PACKAGE__->runtests;
