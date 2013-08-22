@@ -26,14 +26,12 @@ sub _accessor : Test(6) {
     my $entry = Intern::Diary::Model::Entry->new(
         entry_id => 1,
         title => 'title',
-        user_id => 2,
         diary_id    => 3,
         body    => 'body',
         created => DateTime::Format::MySQL->format_datetime($now),
     );
     is $entry->entry_id, 1;
     is $entry->title, 'title';
-    is $entry->user_id, 2;
     is $entry->diary_id, 3;
     is $entry->body, 'body';
     is $entry->created->epoch, $now->epoch;

@@ -26,13 +26,11 @@ sub _accessor : Test(5) {
     my $comment = Intern::Diary::Model::Comment->new(
         comment_id => 1,
         entry_id => 2,
-        user_id => 3,
         comment => 'comment',
         created => DateTime::Format::MySQL->format_datetime($now),
     );
     is $comment->comment_id, 1;
     is $comment->entry_id, 2;
-    is $comment->user_id, 3;
     is $comment->comment, 'comment';
     is $comment->created->epoch, $now->epoch;
 }
